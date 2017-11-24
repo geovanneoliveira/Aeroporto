@@ -1,6 +1,6 @@
 # aeroporto
-Disciplina: Orientação Objetos\n
-Docente: Jorge Fonseca \n
+Disciplina: Orientação Objetos
+Docente: Jorge Fonseca
 Discente: Denini, Geovanne e Thomas
 
 #TheGroup
