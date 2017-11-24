@@ -1,32 +1,36 @@
 package oo.aeroporto.pessoa;
 
-import java.util.ArrayList;
 import oo.aeroporto.pessoa.interf.PassageiroInterface;
 
 public class Passageiro extends Pessoa implements PassageiroInterface {
 	
 	//Attributes
-	private ArrayList<String> telefoneDeEmergencia = new ArrayList<String>();
+	private String telefoneDeEmergencia;
 
 	
 	//constructor
 	public Passageiro(String CPF, String nome, int idade, String telefoneProprio,String telefoneDeEmergencia) {
 		super(CPF, nome, idade, telefoneProprio);
-		this.telefoneDeEmergencia.add(telefoneDeEmergencia);
+		this.telefoneDeEmergencia = telefoneDeEmergencia;
 	}
 
 	
 	//Setters e Getters
-	public ArrayList<String> getTelefoneDeEmergencia() {
+	public String getTelefoneDeEmergencia() {
 		return telefoneDeEmergencia;
 	}
 
 
 	public void setTelefoneDeEmergencia(String telefoneDeEmergencia) {
-		this.telefoneDeEmergencia.add(telefoneDeEmergencia);
+		this.telefoneDeEmergencia = telefoneDeEmergencia;
+	}
+
+	@Override
+	public String getCPF() {
+		return this.getCPF();
 	}
 	
 	//Methods
-
+	
 		
 }

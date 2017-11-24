@@ -30,14 +30,14 @@ public class Piloto extends Funcionario implements PilotoInterface{
 		this.horasDeVoo = horasDeVoo;
 	}
 
-	//Methods
-	//@denini
-	public void listarIdentificador(){
-		System.out.println("Breve " + this.breve);
+
+	public String listarIdentificador(){
+		String s = Integer.toString(breve);
+		return s;
 	}
 	
 	public int getBreve() {
-		return breve;
+		return this.breve;
 	}
 	
 }

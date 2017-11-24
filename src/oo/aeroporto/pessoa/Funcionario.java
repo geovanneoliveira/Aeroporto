@@ -14,22 +14,17 @@ public abstract class Funcionario extends Pessoa implements FuncionarioInterface
 		this.CTPS = CTPS;
 	}
 
-
 	//Setters e Getters
 	public String getCTPS() {
-		return CTPS;
+		return this.CTPS;
 	}
 
 	public void setCTPS(String cTPS) {
-		CTPS = cTPS;
+		this.CTPS = cTPS;
 	}
-	
-	
-	//Methods
-	//@denini
-	
-	public void listarIdentificador(){
-		System.out.println("CTPS: " + this.CTPS);
+		
+	public String listarIdentificador(){
+		return this.CTPS;
 	}
 	
 }

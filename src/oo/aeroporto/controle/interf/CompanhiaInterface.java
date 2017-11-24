@@ -8,7 +8,7 @@ public interface CompanhiaInterface {
 	
 	public void listarInformacoes();
 	
-	public void inserirPiloto(PilotoInterface piloto);
+	public void inserirPiloto(PilotoInterface piloto) throws Exception;
 	
 	public void removerPiloto(PilotoInterface piloto);
 	

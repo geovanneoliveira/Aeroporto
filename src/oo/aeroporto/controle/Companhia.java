@@ -20,7 +20,7 @@ import oo.aeroporto.repositorio.interf.RepCompanhiaInterf;
 import oo.aeroporto.repositorio.interf.RepPilotoInterf;
 import oo.aeroporto.repositorio.interf.RepViagemInterf;
 
-public class Companhia implements CompanhiaInterface{
+public class Companhia  implements CompanhiaInterface {
 
 	//Attributes
 	private int cod;
@@ -98,24 +98,24 @@ public class Companhia implements CompanhiaInterface{
 		System.out.println("Nome: " + this.nome + " cod: " + this.cod);
 		System.out.println("Avião (ões): ");
 		for(int i = 0 ; i < aviao.size(); i++){
-			System.out.print(i + " ");
+			System.out.print(i+1 + " ");
 			aviao.get(i).listarIdentificacao();
 			
 		}
-		System.out.println("\npPiloto(s): ");
+		System.out.println("\nPiloto(s): ");
 		for(int i = 0 ; i < piloto.size(); i++){
-			System.out.print(i + " ");
+			System.out.print(i+1 + " ");
 			piloto.get(i).listarIdentificador();
 			
 		}
 		System.out.println("\nComissario(s): ");
 		for(int i = 0 ; i < comissario.size(); i++){
-			System.out.print(i + " ");
+			System.out.print(i+1 + " ");
 			comissario.get(i).listarIdentificador();
 			
 		}System.out.println("\nViagem(ns): ");
 		for(int i = 0 ; i < viagem.size(); i++){
-			System.out.print(i + " ");
+			System.out.print(i+1 + " ");
 			viagem.get(i).listarIdentificacoes();
 			
 		}
@@ -123,9 +123,15 @@ public class Companhia implements CompanhiaInterface{
 	}
 
 	@Override
-	public void inserirPiloto(PilotoInterface piloto) {
-		this.piloto.add(piloto);	
-		this.repositorioPiloto.adicionar(piloto);
+	public void inserirPiloto(PilotoInterface piloto) throws Exception{  //C
+		if(piloto == null)  {
+			throw new Exception("aeee");
+			
+		}else {
+			this.piloto.add(piloto);	
+			this.repositorioPiloto.adicionar(piloto);
+		}
+		
 	}
 
 	@Override

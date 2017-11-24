@@ -28,14 +28,27 @@ public class Main {
 		
 		a1.inserirCompanhia(RepCompanhia.buscar("TAM"));*/
 		
+		
+		//GOSTEI DO IMPORT DA LINHA 13, TOP
 		RepPilotoInterf rep = RepPiloto.getInstance();
 		CompanhiaInterface a1 = new Companhia(0, "Gol Linhas Áereas");
 		CompanhiaInterface a2 = new Companhia(1, "Avianca");
 		PilotoInterface thomas = new Piloto("08945641459", "Thomás", 19, "999843797","sfwe", 20, 450);
 		ComissarioInterface geo = new Comissario("12312312312", "geovanne",20,"997372597","ctps",100);
-		a1.inserirPiloto(thomas);
+		AirbusInterface air = new Airbus(1, 13);
+		try {
+			a1.inserirPiloto(null);
+		}catch (Exception e) {
+			System.out.println("erro ao inser");;
+		}
 		a1.inserirComissario(geo);
+		a1.inserirAviao(air);
+		RepCompanhiaInterf r1 = RepCompanhia.getInstance();
+		r1.adicionar(a1);
+		r1.adicionar(a2);
+		r1.buscarPorCod(0).listarInformacoes();
 		
+		rep.adicionar(thomas);
 		rep.buscarPorCod(20).listarInformacoes();
 		
 		a1.listarInformacoes();

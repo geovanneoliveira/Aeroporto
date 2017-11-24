@@ -3,9 +3,9 @@ package oo.aeroporto.pessoa.interf;
 
 public interface PessoaInterface {
 
-	public void listarInformacoes();
+	public String listarInformacoes();
 	
-	public void listarIdentificador();
+	public String listarIdentificador();
 	
 	public String getNome();
 }

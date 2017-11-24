@@ -13,9 +13,9 @@ public class Comissario extends Funcionario implements ComissarioInterface {
 		this.ANAC = ANAC;
 	}
 	
-	//@denini
-	public void listarIdentificador(){
-		System.out.println("ANAC:" + this.ANAC);
+	public String listarIdentificador(){
+		String s = Integer.toString(ANAC);
+		return s;
 	}
 	public int getANAC(){
 		return this.ANAC;
