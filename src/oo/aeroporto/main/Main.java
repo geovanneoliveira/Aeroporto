@@ -39,7 +39,7 @@ public class Main {
 		try {
 			a1.inserirPiloto(null);
 		}catch (Exception e) {
-			System.out.println("erro ao inser");;
+			System.out.println("erro ao inser");
 		}
 		a1.inserirComissario(geo);
 		a1.inserirAviao(air);
