@@ -46,6 +46,7 @@ public abstract class Aviao implements AviaoInterface{
 		System.out.println("Satus do Avião: "+this.status);
 	}
 	
+	
 	public void listarIdentificacao() {
 		System.out.println("Código do avião: "+this.cod);
 	}
@@ -114,6 +115,9 @@ public abstract class Aviao implements AviaoInterface{
 		return this.status;
 	}
 
+	public void setStatus(int n) {
+		this.status = n;
+	}
 
 	public void retirarTodos(){
 		if(this.status == 0) {

@@ -116,7 +116,7 @@ public class Companhia  implements CompanhiaInterface {
 		}System.out.println("\nViagem(ns): ");
 		for(int i = 0 ; i < viagem.size(); i++){
 			System.out.print(i+1 + " ");
-			viagem.get(i).listarIdentificacoes();
+			viagem.get(i).listarIdentificador();
 			
 		}
 		

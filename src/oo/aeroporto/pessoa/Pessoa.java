@@ -27,7 +27,7 @@ public abstract class Pessoa implements PessoaInterface {
 	}
 
 	public String listarInformacoes() {
-		String s = ("Mome:  " + this.nome + " CPF: " + this.CPF + " idade: " + this.idade + " telefone: " + this.telefoneProprio);
+		String s = ("Nome:  " + this.nome + " CPF: " + this.CPF + " idade: " + this.idade + " telefone: " + this.telefoneProprio);
 		System.out.println(s);
 		return s;
 	}

@@ -42,89 +42,26 @@ public class Viagem implements ViagemInterface{
 		this.repositorioPassageiro = RepPassageiro.getInstance();
 	}
 
+
+
 	
-	//Getters e Setters
-	
-
-	public void setCod(int cod) {
-		this.cod = cod;
-	}
-
-	public String getAeroportoOrigem() {
-		return aeroportoOrigem;
-	}
-
-	public void setAeroportoOrigem(String aeroportoOrigem) {
-		this.aeroportoOrigem = aeroportoOrigem;
-	}
-
-	public String getAeroportoDestino() {
-		return aeroportoDestino;
-	}
-
-	public void setAeroportoDestino(String aeroportoDestino) {
-		this.aeroportoDestino = aeroportoDestino;
-	}
-
-	public Date getDataHoraDeEmbarque() {
-		return dataHoraDeEmbarque;
-	}
-
-	public void setDataHoraDeEmbarque(Date dataHoraDeEmbarque) {
-		this.dataHoraDeEmbarque = dataHoraDeEmbarque;
-		setDuracao(this.dataHoraDeEmbarque,this.dataHoraDeDesembarque);
-	}
-
-	public Date getDataHoraDeDesembarque() {
-		return dataHoraDeDesembarque;
-	}
-
-	public void setDataHoraDeDesembarque(Date dataHoraDeDesembarque) {
-		this.dataHoraDeDesembarque = dataHoraDeDesembarque;
-		setDuracao(this.dataHoraDeEmbarque,this.dataHoraDeDesembarque);
-	}
-
-	public long getDuracao() {
-		return duracao;
-	}
+	//Methods 
 
 	private void setDuracao(Date dataHoraDeEmbarque, Date dataHoraDeDesembarque) {
 		this.duracao = dataHoraDeDesembarque.getTime() - dataHoraDeEmbarque.getTime();
-	}
-
-	public int getVagasDisponiveis() {
-		return vagasDisponiveis;
-	}
-
-	public void setVagasDisponiveis(int vagasDisponiveis) {
-		this.vagasDisponiveis = vagasDisponiveis;
-	}
-
-	public ArrayList<PassageiroInterface> getPassageiro() {
-		return passageiros;
+	}	
+	
+	public String listarInformacoes() {
+		String s = (" Aeroporto de origem: " + aeroportoOrigem + " Aeroporto de destino: " + aeroportoDestino + " Duração prevista: " +
+					this.duracao + " Vagas Disponiveis: " + this.vagasDisponiveis + " Previsão para embarque: " + this.dataHoraDeEmbarque +
+					" Previsão para desembarque: " + this.dataHoraDeDesembarque);
+		return s;
 	}
 	
-
-	
-	
-	
-	
-	//Methods @denini
-	
-	
-	public void listarInformacoes() {
-		System.out.println("Aeroporto de origem: " + aeroportoOrigem);
-		System.out.println("Aeroporto de destino: " + aeroportoDestino);
-		System.out.println("Duração prevista: " + this.duracao);
-		System.out.println("Vagas Disponiveis: " + this.vagasDisponiveis);
-		System.out.println("Previsão para embarque" + this.dataHoraDeEmbarque);
-		System.out.println("Previsão para desembarque" + this.dataHoraDeDesembarque);
-	}
-	
-	public void listarIdentificacoes() {
-		System.out.println("Codigo da Viagem: " + this.cod);
+	public String listarIdentificador() {
+		String s = ("Codigo : " + this.cod);
+		return  s;
 		
-		//acho que deve ter mais coisas aqui!
 	}
 
 	public void alterarOrigem(String novo) {

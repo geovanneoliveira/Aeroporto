@@ -6,9 +6,9 @@ import oo.aeroporto.pessoa.interf.PassageiroInterface;
 
 public interface ViagemInterface {
 	
-	public void listarInformacoes();
+	public String listarInformacoes();
 	
-	public void listarIdentificacoes();
+	public String listarIdentificador();
 	
 	public void alterarOrigem(String origem);
 	

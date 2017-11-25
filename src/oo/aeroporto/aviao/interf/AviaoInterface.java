@@ -20,16 +20,8 @@ public interface AviaoInterface {
 	
 	public void adicionarComissario(ComissarioInterface comissario);
 	
-	public void retirarTodos();
-	
-	public int checkList();
-	
-	public int getStatus();
-	
-	//public void servirRefeicao();
-	
 	public int getCod(); 
-
+	
 	public int getCapacidade();
 	
 	public PilotoInterface getPiloto();
@@ -39,7 +31,16 @@ public interface AviaoInterface {
 	public ViagemInterface getViagem();
 	
 	public ArrayList<ComissarioInterface> getComissario();
+		
+	public int checkList();
 	
+	public int getStatus();
+	
+	public void setStatus(int n);
+	
+	public void retirarTodos();
+
 	public int quantComissarios();
+
 
 }
