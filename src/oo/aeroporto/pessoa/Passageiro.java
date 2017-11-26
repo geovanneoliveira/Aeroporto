@@ -29,8 +29,5 @@ public class Passageiro extends Pessoa implements PassageiroInterface {
 	public String getCPF() {
 		return this.getCPF();
 	}
-	
-	//Methods
-	
-		
+			
 }

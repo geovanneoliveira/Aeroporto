@@ -18,19 +18,10 @@ public class Piloto extends Funcionario implements PilotoInterface{
 
 	//Setters e getters
 
-	public void setBreve(int breve) {
-		this.breve = breve;
-	}
-
 	public double getHorasDeVoo() {
 		return horasDeVoo;
 	}
-
-	public void setHorasDeVoo(double horasDeVoo) {
-		this.horasDeVoo = horasDeVoo;
-	}
-
-
+	
 	public String listarIdentificador(){
 		String s = Integer.toString(breve);
 		return s;
@@ -38,6 +29,12 @@ public class Piloto extends Funcionario implements PilotoInterface{
 	
 	public int getBreve() {
 		return this.breve;
+	}
+	
+	public void addHorasDeVoo(double hora) {
+		if(hora > 0)
+		this.horasDeVoo += hora;
+		//levantar exceção aqui
 	}
 	
 }
