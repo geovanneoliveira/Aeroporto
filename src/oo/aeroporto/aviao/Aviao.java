@@ -34,21 +34,14 @@ public abstract class Aviao implements AviaoInterface{
 	
 	//Method
 	
-	public void listarInformacoes() {
-		System.out.println("Código do Avião: "+this.cod);
-		System.out.println("Capacidade: "+this.capacidade);
-		System.out.println("Piloto: "+this.piloto.getNome());
-		System.out.println("Co-Piloto: "+this.coPiloto.getNome());
-		System.out.println("Viagem do Avião: "+this.viagem);
-		System.out.println("Comissários:");
-		for (int i = 0; i < this.comissario.size(); i++)
-			System.out.println(this.comissario.get(i));
-		System.out.println("Satus do Avião: "+this.status);
+	public String listarInformacoes() {
+		return null;
 	}
 	
 	
-	public void listarIdentificacao() {
-		System.out.println("Código do avião: "+this.cod);
+	public String listarIdentificacao() {
+		String s = "Código do avião: " + this.cod;
+		return s;
 	}
 
 	public void adicionarPiloto(PilotoInterface piloto) {

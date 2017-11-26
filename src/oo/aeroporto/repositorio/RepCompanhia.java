@@ -2,6 +2,7 @@ package oo.aeroporto.repositorio;
 
 import java.util.ArrayList;
 
+import oo.aeroporto.controle.exceptions.CompanhiaException;
 import oo.aeroporto.controle.interf.CompanhiaInterface;
 import oo.aeroporto.repositorio.interf.RepCompanhiaInterf;
 
@@ -24,8 +25,13 @@ public class RepCompanhia implements RepCompanhiaInterf {
 
 	//Methods
 	@Override
-	public void adicionar(CompanhiaInterface companhia) {
-		
+	public void adicionar(CompanhiaInterface companhia) throws CompanhiaException {
+		if(companhia == null){
+			throw new CompanhiaException("Não é possível persistir um companhia nula.");
+		}
+		if(this.buscarPorCod(companhia.getCod()) != null){
+			throw new CompanhiaException("Já existe uma companhia com o código " + companhia.getCod() + ".");
+		}
 		repCompanhia.add(companhia);
 	}
 

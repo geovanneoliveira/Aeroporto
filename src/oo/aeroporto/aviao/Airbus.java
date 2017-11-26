@@ -4,19 +4,22 @@ import oo.aeroporto.aviao.interf.AirbusInterface;
 import oo.aeroporto.pessoa.interf.PilotoInterface;
 
 public class Airbus extends Aviao implements AirbusInterface {
-
-	//Attributes
 	
 	//Constructor
 	public Airbus(int cod, int capacidade) {
 		super(cod, capacidade);
-		// TODO Comissario.size() == 3 & piloto.getHorasDeVoo() > 1000
 	}
 	
 	@Override
-	public void listarInformacoes() {
-		System.out.println("Modelo do Avião: Airbus");
-		super.listarInformacoes();
+	public String listarInformacoes() {
+		String s = "\nCódigo do Avião: "+ getCod() + "\nCapacidade: "+ getCapacidade();
+				if(getPiloto() != null) s+= "\nPiloto: "+getPiloto().getNome();
+				if(getCoPiloto() != null) s+= "\nCo-Piloto: "+ getCoPiloto().getNome(); 
+				if(getViagem() != null) s+="\nViagem do Avião: "+ getViagem().getCod();
+				if(getComissario() != null) s+="\nComissários:" + quantComissarios();
+				s += "\nSatus do Avião: "+ getStatus();
+				s += ("\nModelo do Avião: Airbus");
+		return s;
 		
 	}
 	
@@ -36,8 +39,9 @@ public class Airbus extends Aviao implements AirbusInterface {
 	}
 	
 
-	public void servirRefeicao() {
-		System.out.println("A refeição foi servida");
+	public String servirRefeicao() {
+		String s = "A refeição foi servida";
+		return s;
 	}
 
 }

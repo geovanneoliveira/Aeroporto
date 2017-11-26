@@ -5,6 +5,7 @@ package oo.aeroporto.controle;
 import java.util.ArrayList;
 
 import oo.aeroporto.aviao.interf.AviaoInterface;
+import oo.aeroporto.controle.exceptions.CompanhiaException;
 import oo.aeroporto.controle.interf.CompanhiaInterface;
 import oo.aeroporto.controle.interf.ViagemInterface;
 import oo.aeroporto.pessoa.interf.ComissarioInterface;
@@ -61,7 +62,7 @@ public class Companhia  implements CompanhiaInterface {
 		this.repositorioPiloto = RepPiloto.getInstance();
 		this.repositorioViagem = RepViagem.getInstance();
 		this.repositorioCompanhia = RepCompanhia.getInstance();
-		this.repositorioCompanhia.adicionar(this);
+		// this.repositorioCompanhia.adicionar(this);
 	}
 	
 	//Getters e Setters
@@ -123,14 +124,15 @@ public class Companhia  implements CompanhiaInterface {
 	}
 
 	@Override
-	public void inserirPiloto(PilotoInterface piloto) throws Exception{  //C
+	public void inserirPiloto(PilotoInterface piloto) throws CompanhiaException {  //C
 		if(piloto == null)  {
-			throw new Exception("aeee");
-			
-		}else {
-			this.piloto.add(piloto);	
-			this.repositorioPiloto.adicionar(piloto);
+			throw new CompanhiaException("Piloto inválido.");
 		}
+		if(this.buscarPiloto(piloto.getBreve()) != null){
+			throw new CompanhiaException("Esse piloto já pertence a essa companhia.");
+		}
+		// TODO checar se esse piloto já está na companhia
+		this.piloto.add(piloto);
 		
 	}
 

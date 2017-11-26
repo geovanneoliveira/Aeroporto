@@ -2,6 +2,7 @@ package oo.aeroporto.repositorio;
 
 import java.util.ArrayList;
 
+import oo.aeroporto.controle.exceptions.PilotoException;
 import oo.aeroporto.pessoa.interf.PilotoInterface;
 import oo.aeroporto.repositorio.interf.RepPilotoInterf;;
 
@@ -21,8 +22,13 @@ public class RepPiloto implements RepPilotoInterf{
 	}
 
 	@Override
-	public void adicionar(PilotoInterface piloto) {
-
+	public void adicionar(PilotoInterface piloto) throws PilotoException {
+		if(piloto == null){
+			throw new PilotoException("Não é possível armazenar um piloto nulo.");
+		}
+		if(this.buscarPorCod(piloto.getBreve()) != null){
+			throw new PilotoException("Já existe algum piloto com esse breve.");
+		}
 		repPiloto.add(piloto);
 	}
 

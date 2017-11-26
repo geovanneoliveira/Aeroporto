@@ -1,6 +1,7 @@
 package oo.aeroporto.controle.interf;
 
 import oo.aeroporto.aviao.interf.AviaoInterface;
+import oo.aeroporto.controle.exceptions.CompanhiaException;
 import oo.aeroporto.pessoa.interf.ComissarioInterface;
 import oo.aeroporto.pessoa.interf.PilotoInterface;
 
@@ -8,7 +9,7 @@ public interface CompanhiaInterface {
 	
 	public void listarInformacoes();
 	
-	public void inserirPiloto(PilotoInterface piloto) throws Exception;
+	public void inserirPiloto(PilotoInterface piloto) throws CompanhiaException;
 	
 	public void removerPiloto(PilotoInterface piloto);
 	

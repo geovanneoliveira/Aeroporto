@@ -8,9 +8,9 @@ import oo.aeroporto.pessoa.interf.PilotoInterface;
 
 public interface AviaoInterface {
 	
-	public void listarInformacoes();
+	public String listarInformacoes();
 	
-	public void listarIdentificacao();
+	public String listarIdentificacao();
 	
 	public void adicionarPiloto(PilotoInterface piloto);
 	

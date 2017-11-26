@@ -11,21 +11,27 @@ public class Boeing extends Aviao  implements BoeingInterface{
 	//Constructor
 	public Boeing(int cod, int capacidade) {
 		super(cod, capacidade);
-		// TODO Comissario.size() == 2 && piloto.getHorasDeVoo() > 800
 	}
 	
 
 	@Override
-	public void listarInformacoes() {
-		System.out.println("Modelo do Avião: Boening");
-		super.listarInformacoes();
+	public String listarInformacoes() {
+		String s = "\nCódigo do Avião: "+ getCod() + "\nCapacidade: "+ getCapacidade();
+		if(getPiloto() != null) s+= "\nPiloto: "+getPiloto().getNome();
+		if(getCoPiloto() != null) s+= "\nCo-Piloto: "+ getCoPiloto().getNome(); 
+		if(getViagem() != null) s+="\nViagem do Avião: "+ getViagem().getCod();
+		if(getComissario() != null) s+="\nComissários:" + quantComissarios();
+		s += "\nSatus do Avião: "+ getStatus();
+		s += ("\nModelo do Avião: Boeing");
+		return s;
+
 		
 	}
 	
 	@Override
 	public void adicionarPiloto(PilotoInterface piloto) {
 		if (piloto.getHorasDeVoo() >= 800) super.adicionarPiloto(piloto);
-		else System.out.println("Não é possível adicionar esse pilot, ele não tem as horas de voo necessarias");
+		else System.out.println("Não é possível adicionar esse piloto ele não tem as horas de voo necessarias");
 	}
 	
 	@Override
@@ -37,8 +43,9 @@ public class Boeing extends Aviao  implements BoeingInterface{
 		}
 	}
 	
-	public void massagem() {
-		System.out.println("A massagem está sendo aplicadas nos clientes");
+	public String massagem() {
+		String s = "A massagem está sendo aplicadas nos clientes";
+		return s;
 		
 	}
 

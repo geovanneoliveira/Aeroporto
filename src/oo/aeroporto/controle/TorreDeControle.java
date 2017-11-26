@@ -41,11 +41,12 @@ public class TorreDeControle implements TorreControleInterface{
 
 	@Override	//verificar se aqui não era pra checar se o avião tem as coisas
 	public boolean taxi(AviaoInterface aviao) {
-		if (aviao.getPiloto() == null || aviao.getCoPiloto() == null || aviao.getViagem() == null) {
+		if (aviao.getPiloto() == null || aviao.getCoPiloto() == null || aviao.getViagem() == null || aviao.getStatus() != 0) {
 			return false;
 		}
 		if (this.counter < this.quatidadeDePistas) {
 			this.counter++;
+			aviao.setStatus(1);
 			return true;
 		}
 		return false;
@@ -53,18 +54,19 @@ public class TorreDeControle implements TorreControleInterface{
 
 	@Override	//precisa colocar exception
 	public void decolar(AviaoInterface aviao) {
-		if (this.taxi(aviao) == true) {
+		if (aviao.getStatus() == 1) {
 			System.out.println("O avião de cód "+aviao.getCod()+" decolou");
 			this.counter--;
+			aviao.setStatus(2);
 		}
 		else System.out.println("O aviao não pode decolar"); //tratar exeção aqui
 	}
 
 	@Override	//precisa colocar exception
 	public void aterrissar(AviaoInterface aviao) {
-		if (this.taxi(aviao) == true) {
+		if (aviao.getStatus() == 2 && quatidadeDePistas > 0) {
 			System.out.println("O avião de cód "+aviao.getCod()+" aterrissou");
-			this.counter--;
+			aviao.setStatus(0);
 		}
 		else System.out.println("O aviao não pode aterrissar"); //tratar exeção aqui
 	}
