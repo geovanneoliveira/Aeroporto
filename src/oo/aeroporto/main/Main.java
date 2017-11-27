@@ -3,8 +3,7 @@ package oo.aeroporto.main;
 import oo.aeroporto.aviao.Airbus;
 import oo.aeroporto.aviao.interf.*;
 import oo.aeroporto.controle.interf.*;
-import oo.aeroporto.pessoa.Comissario;
-import oo.aeroporto.pessoa.Piloto;
+import oo.aeroporto.pessoa.*;
 import oo.aeroporto.pessoa.interf.*;
 import oo.aeroporto.repositorio.interf.*;
 import oo.aeroporto.controle.*;
@@ -12,16 +11,19 @@ import oo.aeroporto.controle.exceptions.CompanhiaException;
 import oo.aeroporto.controle.exceptions.PilotoException;
 import oo.aeroporto.controle.exceptions.TorreControleException;
 import oo.aeroporto.repositorio.RepCompanhia;
+import oo.aeroporto.repositorio.RepPassageiro;
 import oo.aeroporto.repositorio.RepPiloto;
 
 public class Main {
 	
 	private RepPilotoInterf repPiloto;
 	private RepCompanhiaInterf repCompanhia;
+	private RepPassageiroInterf repPassageiroo;
 	
 	public Main() {
 		this.repPiloto = RepPiloto.getInstance();
 		this.repCompanhia = RepCompanhia.getInstance();
+		this.repPassageiroo = RepPassageiro.getInstance();
 	}
 	
 	public CompanhiaInterface clickCadastrarCompanhia(int id, String nome) {
@@ -48,6 +50,16 @@ public class Main {
 		return novoPiloto;
 	}
 	
+	public void clickCadastroPassageiro(String CPF, String nome, int idade, String telefoneProprio,String telefoneDeEmergencia) {
+		PassageiroInterface p = new Passageiro(CPF, nome, idade, telefoneProprio, telefoneDeEmergencia);
+		try {
+			this.repPassageiroo.adicionar(p);
+			System.out.println("Passagei cadastrado com sucesso!");
+		} catch (PilotoException e) { //mudar aqui
+			
+		}
+	}
+	
 	public void clickCadastroPilotoEmCompanhia(CompanhiaInterface companhia, PilotoInterface piloto) {
 		try {
 			if(companhia == null){
@@ -63,6 +75,7 @@ public class Main {
 			System.err.println("Erro ao cadastrar piloto em companhia, motivo: " + ce.getMessage());
 		}
 	}
+	
 	
 	/* MAIN */
 	
