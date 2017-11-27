@@ -10,6 +10,7 @@ import oo.aeroporto.repositorio.interf.*;
 import oo.aeroporto.controle.*;
 import oo.aeroporto.controle.exceptions.CompanhiaException;
 import oo.aeroporto.controle.exceptions.PilotoException;
+import oo.aeroporto.controle.exceptions.TorreControleException;
 import oo.aeroporto.repositorio.RepCompanhia;
 import oo.aeroporto.repositorio.RepPiloto;
 
@@ -66,11 +67,17 @@ public class Main {
 	/* MAIN */
 	
 	public static void main(String[] args) {
-		Main main = new Main();
+		/*Main main = new Main();
 		CompanhiaInterface companhia = main.clickCadastrarCompanhia(1, "Gol");
 		PilotoInterface piloto = main.clickCadastrarPiloto("08945641459", "Thomás", 19, "999843797","sfwe", 20, 450);
 		main.clickCadastroPilotoEmCompanhia(companhia, piloto);
-		main.clickCadastroPilotoEmCompanhia(companhia, piloto);
+		main.clickCadastroPilotoEmCompanhia(companhia, piloto);*/
+		TorreControleInterface torre = new TorreDeControle(4, 5);
+		try {
+			torre.taxi(null);
+		}catch (TorreControleException e){
+			System.err.println("Erro ao realizar o Taxi do avião, motivo: "+e.getMessage());
+		}
 	}
 	
 	

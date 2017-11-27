@@ -1,6 +1,7 @@
 package oo.aeroporto.controle;
 
 import oo.aeroporto.aviao.interf.AviaoInterface;
+import oo.aeroporto.controle.exceptions.TorreControleException;
 import oo.aeroporto.controle.interf.TorreControleInterface;
 
 public class TorreDeControle implements TorreControleInterface{
@@ -32,42 +33,40 @@ public class TorreDeControle implements TorreControleInterface{
 	//Methods
 
 	@Override
-	public void status() {
-		System.out.println("Cód da Torre: "+this.cod);
-		System.out.println("Quantidade de Pistas: "+this.quatidadeDePistas);
-		System.out.println("Quantidade de Pistas atualmente ocupadas: "+this.counter);
-		
+	public String status() {
+		String msg = ("Cód da Torre: "+this.cod);
+		msg += ("\nQuantidade de Pistas: "+this.quatidadeDePistas);
+		msg += ("\nQuantidade de Pistas atualmente ocupadas: "+this.counter);
+		return msg;
 	}
 
-	@Override	//verificar se aqui não era pra checar se o avião tem as coisas
-	public boolean taxi(AviaoInterface aviao) {
-		if (aviao.getPiloto() == null || aviao.getCoPiloto() == null || aviao.getViagem() == null || aviao.getStatus() != 0) {
+	@Override
+	public boolean taxi(AviaoInterface aviao) throws TorreControleException{
+		if (aviao == null) throw new TorreControleException("Falta Aviao");
+		if (aviao.checkList() == 1) 
 			return false;
-		}
 		if (this.counter < this.quatidadeDePistas) {
 			this.counter++;
-			aviao.setStatus(1);
 			return true;
 		}
 		return false;
 	}
 
-	@Override	//precisa colocar exception
-	public void decolar(AviaoInterface aviao) {
-		if (aviao.getStatus() == 1) {
-			System.out.println("O avião de cód "+aviao.getCod()+" decolou");
+	@Override
+	public void decolar(AviaoInterface aviao) throws TorreControleException{
+		if (this.taxi(aviao) == true) {
 			this.counter--;
-			aviao.setStatus(2);
+			aviao.setStatus(2);	//analisar o que é isso
 		}
-		else System.out.println("O aviao não pode decolar"); //tratar exeção aqui
+		else throw new TorreControleException("Avião com o cheklist ainda incompleto");
 	}
 
-	@Override	//precisa colocar exception
-	public void aterrissar(AviaoInterface aviao) {
-		if (aviao.getStatus() == 2 && quatidadeDePistas > 0) {
-			System.out.println("O avião de cód "+aviao.getCod()+" aterrissou");
+	@Override
+	public void aterrissar(AviaoInterface aviao) throws TorreControleException{
+		if (this.taxi(aviao) == true) {
 			aviao.setStatus(0);
+			this.counter--;
 		}
-		else System.out.println("O aviao não pode aterrissar"); //tratar exeção aqui
+		else throw new TorreControleException("Avião com o cheklist ainda incompleto");
 	}
 }
