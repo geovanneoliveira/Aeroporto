@@ -3,6 +3,7 @@ package oo.aeroporto.view;
 import oo.aeroporto.controle.Companhia;
 import oo.aeroporto.controle.exceptions.CompanhiaException;
 import oo.aeroporto.controle.interf.CompanhiaInterface;
+import oo.aeroporto.negocio.*;
 import oo.aeroporto.pessoa.Passageiro;
 import oo.aeroporto.pessoa.Piloto;
 import oo.aeroporto.pessoa.exceptions.PassageiroException;
@@ -13,9 +14,11 @@ import oo.aeroporto.repositorio.interf.*;
 
 public class Fachada {
 
+	NegocioInterf negocio = null;
+	
 	//Constructor
 	public Fachada() {
-
+		negocio = new Negocio();
 	}
 	
 	
@@ -25,16 +28,27 @@ public class Fachada {
 	//COMPANHIA
 	
 	public CompanhiaInterface clickCadastrarCompanhia(int id, String nome) {
+		CompanhiaInterface companhia = null;
 		try {
-			CompanhiaInterface novaComp = new Companhia(id, nome);
-			System.out.println("Companhia cadastrada com sucesso!");
-			return novaComp;
+		companhia = negocio.CadastrarCompanhia(id, nome);
+		System.out.println("Companhia cadastrada com sucesso!");
+		return companhia;
+		
 		} catch (CompanhiaException ce) {
-			
 			System.err.println("Erro ao cadastrar companhia, motivo: " + ce.getMessage());
+			return null;
 		}
-		return null;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 		
 	
 	public PilotoInterface clickCadastrarPiloto(String CPF, String nome, int idade, String telefoneProprio, String CTPS, int breve, double horasDeVoo) {
