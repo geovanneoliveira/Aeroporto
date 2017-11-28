@@ -4,10 +4,14 @@ package oo.aeroporto.controle;
 
 import java.util.ArrayList;
 
+import oo.aeroporto.aviao.exception.AviaoException;
 import oo.aeroporto.aviao.interf.AviaoInterface;
 import oo.aeroporto.controle.exceptions.CompanhiaException;
+import oo.aeroporto.controle.exceptions.ViagemException;
 import oo.aeroporto.controle.interf.CompanhiaInterface;
 import oo.aeroporto.controle.interf.ViagemInterface;
+import oo.aeroporto.pessoa.exceptions.ComissarioException;
+import oo.aeroporto.pessoa.exceptions.PilotoException;
 import oo.aeroporto.pessoa.interf.ComissarioInterface;
 import oo.aeroporto.pessoa.interf.PilotoInterface;
 import oo.aeroporto.repositorio.RepAviao;
@@ -38,17 +42,17 @@ public class Companhia  implements CompanhiaInterface {
 
 	
 	//Constructor
-	public Companhia(int cod, String nome) {
+	public Companhia(int cod, String nome) throws CompanhiaException {
 		this(cod,nome,null,null,null);
 	}
 	
 	public Companhia(int cod, String nome, ArrayList<AviaoInterface> aviao, ArrayList<PilotoInterface> piloto, 
-			ArrayList<ComissarioInterface> comissario) {
+			ArrayList<ComissarioInterface> comissario) throws CompanhiaException {
 		this(cod,nome,aviao,piloto,comissario,null);
 	}
 	
 	public Companhia(int cod, String nome, ArrayList<AviaoInterface> aviao, ArrayList<PilotoInterface> piloto, 
-			ArrayList<ComissarioInterface> comissario, ArrayList<ViagemInterface> viagem) {
+			ArrayList<ComissarioInterface> comissario, ArrayList<ViagemInterface> viagem) throws CompanhiaException {
 		this.cod = cod;
 		this.nome = nome;
 		
@@ -62,7 +66,7 @@ public class Companhia  implements CompanhiaInterface {
 		this.repositorioPiloto = RepPiloto.getInstance();
 		this.repositorioViagem = RepViagem.getInstance();
 		this.repositorioCompanhia = RepCompanhia.getInstance();
-		// this.repositorioCompanhia.adicionar(this);
+		this.repositorioCompanhia.adicionar(this);
 	}
 	
 	//Getters e Setters
@@ -94,33 +98,47 @@ public class Companhia  implements CompanhiaInterface {
 	//Method	
 
 	@Override
-	public void listarInformacoes() {
-
-		System.out.println("Nome: " + this.nome + " cod: " + this.cod);
-		System.out.println("Avião (ões): ");
-		for(int i = 0 ; i < aviao.size(); i++){
-			System.out.print(i+1 + " ");
-			aviao.get(i).listarIdentificacao();
-			
-		}
-		System.out.println("\nPiloto(s): ");
-		for(int i = 0 ; i < piloto.size(); i++){
-			System.out.print(i+1 + " ");
-			piloto.get(i).listarIdentificador();
-			
-		}
-		System.out.println("\nComissario(s): ");
-		for(int i = 0 ; i < comissario.size(); i++){
-			System.out.print(i+1 + " ");
-			comissario.get(i).listarIdentificador();
-			
-		}System.out.println("\nViagem(ns): ");
-		for(int i = 0 ; i < viagem.size(); i++){
-			System.out.print(i+1 + " ");
-			viagem.get(i).listarIdentificador();
-			
+	public String listarInformacoes() {
+		
+		String s = ("\nNome: " + this.nome + "\ncod: " + this.cod);
+		
+		if(aviao != null) {
+			s += ("\nAvião (ões): ");
+			for(int i = 0 ; i < aviao.size(); i++){
+				s += (i+1 + " ");
+				s += aviao.get(i).listarIdentificacao();
+				
+			}
 		}
 		
+		if(piloto != null) {
+			s += ("\nPiloto(s): ");
+			for(int i = 0 ; i < piloto.size(); i++){
+				s +=(i+1 + " ");
+				s += piloto.get(i).listarIdentificador();
+				
+			}
+		}
+		
+		if(comissario != null) {
+			s += ("\nComissario(s): ");
+			for(int i = 0 ; i < comissario.size(); i++){
+				s += (i+1 + " ");
+				s += comissario.get(i).listarIdentificador();
+			}
+				
+		}
+		
+		if(viagem != null) {
+			s +=("\nViagem(ns): ");
+			for(int i = 0 ; i < viagem.size(); i++){
+				s +=(i+1 + " ");
+				s += viagem.get(i).listarIdentificador();
+				
+			}
+		}
+		
+		return s;
 	}
 
 	@Override
@@ -131,13 +149,12 @@ public class Companhia  implements CompanhiaInterface {
 		if(this.buscarPiloto(piloto.getBreve()) != null){
 			throw new CompanhiaException("Esse piloto já pertence a essa companhia.");
 		}
-		// TODO checar se esse piloto já está na companhia
 		this.piloto.add(piloto);
 		
 	}
 
 	@Override
-	public void removerPiloto(PilotoInterface piloto) {
+	public void removerPiloto(PilotoInterface piloto) throws PilotoException {
 		this.piloto.remove(piloto);
 		this.repositorioPiloto.deletar(piloto);
 	}
@@ -155,13 +172,13 @@ public class Companhia  implements CompanhiaInterface {
 	}
 
 	@Override
-	public void inserirComissario(ComissarioInterface comissario) {
+	public void inserirComissario(ComissarioInterface comissario) throws ComissarioException {
 		this.comissario.add(comissario);
 		this.repositorioComissario.adicionar(comissario);
 	}
 
 	@Override
-	public void removerComissario(ComissarioInterface comissario) {
+	public void removerComissario(ComissarioInterface comissario) throws ComissarioException {
 		this.comissario.remove(comissario);
 		this.repositorioComissario.deletar(comissario);
 	}
@@ -181,13 +198,13 @@ public class Companhia  implements CompanhiaInterface {
 
 
 	@Override
-	public void inserirAviao(AviaoInterface aviao) {
+	public void inserirAviao(AviaoInterface aviao) throws AviaoException {
 		this.aviao.add(aviao);
 		this.repositorioAviao.adicionar(aviao);
 	}
 
 	@Override
-	public void removerAviao(AviaoInterface aviao) {
+	public void removerAviao(AviaoInterface aviao) throws AviaoException {
 		this.aviao.remove(aviao);
 		this.repositorioAviao.deletar(aviao);
 	}
@@ -206,13 +223,13 @@ public class Companhia  implements CompanhiaInterface {
 	}
 
 	@Override
-	public void inserirViagem(ViagemInterface viagem) {
+	public void inserirViagem(ViagemInterface viagem) throws ViagemException {
 		this.viagem.add(viagem);
 		this.repositorioViagem.adicionar(viagem);
 	}
 
 	@Override
-	public void removerViagem(ViagemInterface viagem) {
+	public void removerViagem(ViagemInterface viagem) throws ViagemException {
 		this.viagem.remove(viagem);
 		this.repositorioViagem.deletar(viagem);
 		

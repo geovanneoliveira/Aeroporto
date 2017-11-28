@@ -6,6 +6,8 @@ import oo.aeroporto.aviao.interf.AviaoInterface;
 import oo.aeroporto.controle.interf.ViagemInterface;
 import oo.aeroporto.pessoa.interf.ComissarioInterface;
 import oo.aeroporto.pessoa.interf.PilotoInterface;
+import oo.aeroporto.repositorio.RepAviao;
+import oo.aeroporto.repositorio.interf.RepAviaoInterf;
 
 
 
@@ -19,6 +21,7 @@ public abstract class Aviao implements AviaoInterface{
 	private PilotoInterface coPiloto;
 	private ViagemInterface viagem;
 	private ArrayList<ComissarioInterface> comissario = new ArrayList<ComissarioInterface>();
+	private RepAviaoInterf repAviao;
 	
 	//Constructor
 	public Aviao(int cod, int capacidade) {
@@ -29,6 +32,9 @@ public abstract class Aviao implements AviaoInterface{
 		this.viagem = null;
 		this.comissario = null;
 		this.status = 0;
+		
+		repAviao = RepAviao.getInstance();
+		repAviao.adicionar(this);
 	}
 			
 	

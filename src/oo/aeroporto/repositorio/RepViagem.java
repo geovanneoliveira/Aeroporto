@@ -2,6 +2,7 @@ package oo.aeroporto.repositorio;
 
 import java.util.ArrayList;
 
+import oo.aeroporto.controle.exceptions.ViagemException;
 import oo.aeroporto.controle.interf.ViagemInterface;
 import oo.aeroporto.repositorio.interf.RepViagemInterf;
 
@@ -21,14 +22,24 @@ public class RepViagem  implements RepViagemInterf{
 	}
 
 	@Override
-	public void adicionar(ViagemInterface viagem) {
-		
+	public void adicionar(ViagemInterface viagem) throws ViagemException {
+		if(viagem == null) {
+			throw new ViagemException("Não é possível persistir uma viagem nulo.");
+		}
+		if(buscarPorCod(viagem.getCod()) != null) {
+			throw new ViagemException("Já existe uma viagem com o cod :" + viagem.getCod() + " .");
+		}
 		repViagem.add(viagem);
 	}
 
 	@Override
-	public void deletar(ViagemInterface viagem) {
-		
+	public void deletar(ViagemInterface viagem) throws ViagemException {
+		if(viagem == null) {
+			throw new ViagemException("Não é possível remover uma viagem nula.");
+		}
+		if(buscarPorCod(viagem.getCod()) == null) {
+			throw new ViagemException("Não é possível remover uma viagem que não está no repositório");
+		}
 		repViagem.remove(viagem);
 	}
 

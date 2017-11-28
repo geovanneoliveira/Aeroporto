@@ -2,10 +2,14 @@ package oo.aeroporto.controle;
 
 import java.util.Date;
 
+import oo.aeroporto.controle.exceptions.ViagemException;
 import oo.aeroporto.controle.interf.ViagemInterface;
+import oo.aeroporto.pessoa.exceptions.PassageiroException;
 import oo.aeroporto.pessoa.interf.PassageiroInterface;
 import oo.aeroporto.repositorio.RepPassageiro;
+import oo.aeroporto.repositorio.RepViagem;
 import oo.aeroporto.repositorio.interf.RepPassageiroInterf;
+import oo.aeroporto.repositorio.interf.RepViagemInterf;
 
 import java.util.ArrayList;
 
@@ -22,14 +26,16 @@ public class Viagem implements ViagemInterface{
 	private int vagasDisponiveis;
 	private ArrayList<PassageiroInterface> passageiros = new ArrayList<PassageiroInterface>();
 	private RepPassageiroInterf repositorioPassageiro;
+	private RepViagemInterf repViagem;
+	
 	
 	public Viagem(int cod, String aeroportoOrigem, String aeroportoDestino, Date dataHoraDeEmbarque,
-			Date dataHoraDeDesembarque, int vagasDisponiveis) {
+			Date dataHoraDeDesembarque, int vagasDisponiveis) throws ViagemException {
 		this(cod, aeroportoOrigem, aeroportoDestino, dataHoraDeEmbarque, dataHoraDeDesembarque,vagasDisponiveis, null);
 	}
 	
 	public Viagem(int cod, String aeroportoOrigem, String aeroportoDestino, Date dataHoraDeEmbarque,
-			Date dataHoraDeDesembarque, int vagasDisponiveis, ArrayList<PassageiroInterface> passageiro) {
+			Date dataHoraDeDesembarque, int vagasDisponiveis, ArrayList<PassageiroInterface> passageiro) throws ViagemException {
 		this.cod = cod;
 		this.aeroportoOrigem = aeroportoOrigem;
 		this.aeroportoDestino = aeroportoDestino;
@@ -40,6 +46,8 @@ public class Viagem implements ViagemInterface{
 		if(passageiro != null)	this.passageiros = passageiro;
 		setDuracao(dataHoraDeEmbarque,dataHoraDeDesembarque);
 		this.repositorioPassageiro = RepPassageiro.getInstance();
+		this.repViagem = RepViagem.getInstance();
+		repViagem.adicionar(this);
 	}
 
 
@@ -102,12 +110,12 @@ public class Viagem implements ViagemInterface{
 		}
 	}
 	
-	public void adicionarPassageiro(PassageiroInterface passageiro) {
+	public void adicionarPassageiro(PassageiroInterface passageiro) throws PassageiroException {
 		this.passageiros.add(passageiro);
 		this.repositorioPassageiro.adicionar(passageiro);
 	}
 	
-	public void retirarPassageiro(PassageiroInterface passageiro) {
+	public void retirarPassageiro(PassageiroInterface passageiro) throws PassageiroException {
 		this.passageiros.remove(passageiro);
 		this.repositorioPassageiro.deletar(passageiro);
 	}

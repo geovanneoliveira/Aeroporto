@@ -1,85 +1,23 @@
-package oo.aeroporto.main;
+package oo.aeroporto.view;
 
 import oo.aeroporto.aviao.Airbus;
 import oo.aeroporto.aviao.interf.*;
 import oo.aeroporto.controle.interf.*;
 import oo.aeroporto.pessoa.*;
+import oo.aeroporto.pessoa.exceptions.PilotoException;
 import oo.aeroporto.pessoa.interf.*;
 import oo.aeroporto.repositorio.interf.*;
 import oo.aeroporto.controle.*;
 import oo.aeroporto.controle.exceptions.CompanhiaException;
-import oo.aeroporto.controle.exceptions.PilotoException;
 import oo.aeroporto.controle.exceptions.TorreControleException;
 import oo.aeroporto.repositorio.RepCompanhia;
-import oo.aeroporto.repositorio.RepPassageiro;
 import oo.aeroporto.repositorio.RepPiloto;
 
-public class Main {
-	
-	private RepPilotoInterf repPiloto;
-	private RepCompanhiaInterf repCompanhia;
-	private RepPassageiroInterf repPassageiroo;
-	
-	public Main() {
-		this.repPiloto = RepPiloto.getInstance();
-		this.repCompanhia = RepCompanhia.getInstance();
-		this.repPassageiroo = RepPassageiro.getInstance();
-	}
-	
-	public CompanhiaInterface clickCadastrarCompanhia(int id, String nome) {
-		CompanhiaInterface novaComp = new Companhia(id, nome);
-		try {
-			this.repCompanhia.adicionar(novaComp);
-			System.out.println("Companhia cadastrada com sucesso!");
-		} catch (CompanhiaException ce) {
-			novaComp = null;
-			System.err.println("Erro ao cadastrar companhia, motivo: " + ce.getMessage());
-		}
-		return novaComp;
-	}
-	
-	public PilotoInterface clickCadastrarPiloto(String CPF, String nome, int idade, String telefoneProprio, String CTPS, int breve, double horasDeVoo) {
-		PilotoInterface novoPiloto = new Piloto(CPF, nome, idade, telefoneProprio, CTPS, breve, horasDeVoo);
-		try {
-			this.repPiloto.adicionar(novoPiloto);
-			System.out.println("Piloto cadastrado com sucesso!");
-		} catch (PilotoException pe) {
-			novoPiloto = null;
-			System.err.println("Erro ao cadastrar piloto, motivo: " + pe.getMessage());
-		}
-		return novoPiloto;
-	}
-	
-	public void clickCadastroPassageiro(String CPF, String nome, int idade, String telefoneProprio,String telefoneDeEmergencia) {
-		PassageiroInterface p = new Passageiro(CPF, nome, idade, telefoneProprio, telefoneDeEmergencia);
-		try {
-			this.repPassageiroo.adicionar(p);
-			System.out.println("Passagei cadastrado com sucesso!");
-		} catch (PilotoException e) { //mudar aqui
-			
-		}
-	}
-	
-	public void clickCadastroPilotoEmCompanhia(CompanhiaInterface companhia, PilotoInterface piloto) {
-		try {
-			if(companhia == null){
-				throw new CompanhiaException("Companhia não foi encotrada.");
-			}
-			if(piloto == null){
-				throw new CompanhiaException("Piloto não foi encotrado.");
-			}
-			
-			companhia.inserirPiloto(piloto);
-			System.out.println("Piloto " + piloto.getNome() + " adicionado para companhia " + companhia.getNome());
-		} catch (CompanhiaException ce) {
-			System.err.println("Erro ao cadastrar piloto em companhia, motivo: " + ce.getMessage());
-		}
-	}
-	
-	
+public class OldMain {
+
 	/* MAIN */
 	
-	public static void main(String[] args) {
+	public static void main1(String[] args) {
 		/*Main main = new Main();
 		CompanhiaInterface companhia = main.clickCadastrarCompanhia(1, "Gol");
 		PilotoInterface piloto = main.clickCadastrarPiloto("08945641459", "Thomás", 19, "999843797","sfwe", 20, 450);
@@ -106,7 +44,7 @@ public class Main {
 		
 		a1.inserirCompanhia(RepCompanhia.buscar("TAM"));*/
 		
-		
+		/*
 		//GOSTEI DO IMPORT DA LINHA 13, TOP
 		//Quem ta usando isso? @geo
 		RepPilotoInterf rep = RepPiloto.getInstance();
@@ -161,5 +99,6 @@ public class Main {
 		//PilotoInterface teste1 = rep.buscarPorCod(20);
 		
 	}
-
+*/
+}
 }

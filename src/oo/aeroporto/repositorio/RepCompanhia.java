@@ -30,14 +30,20 @@ public class RepCompanhia implements RepCompanhiaInterf {
 			throw new CompanhiaException("Não é possível persistir um companhia nula.");
 		}
 		if(this.buscarPorCod(companhia.getCod()) != null){
-			throw new CompanhiaException("Já existe uma companhia com o código " + companhia.getCod() + ".");
+			throw new CompanhiaException("Já existe uma companhia com o código " + companhia.getCod() + " .");
 		}
 		repCompanhia.add(companhia);
 	}
 
 	@Override
-	public void deletar(CompanhiaInterface companhia) {
-		
+	public void deletar(CompanhiaInterface companhia) throws CompanhiaException {
+		if(companhia == null) {
+			throw new CompanhiaException("Não é possível remover uma companhia nula.");
+
+		}
+		if(buscarPorCod(companhia.getCod()) == null) {
+			throw new CompanhiaException("Não é possível remover uma companhia que não está no repositório");
+		}
 		repCompanhia.remove(companhia);
 		
 	}

@@ -2,6 +2,7 @@ package oo.aeroporto.repositorio;
 
 import java.util.ArrayList;
 
+import oo.aeroporto.aviao.exception.AviaoException;
 import oo.aeroporto.aviao.interf.AviaoInterface;
 import oo.aeroporto.repositorio.interf.RepAviaoInterf;
 
@@ -26,14 +27,26 @@ public class RepAviao implements RepAviaoInterf{
 
 	//Methods
 	@Override
-	public void adicionar(AviaoInterface aviao) {
+	public void adicionar(AviaoInterface aviao) throws AviaoException {
+		if(aviao == null) {
+			throw new AviaoException("Não é possível persistir um aviao nulo.");
 
+		}
+		if(buscarPorCod(aviao.getCod()) != null) {
+			throw new AviaoException("Já existe um aviao com o código " + aviao.getCod() + " .");
+
+		}
 		repAviao.add(aviao);
 	}
 
 	@Override
-	public void deletar(AviaoInterface aviao) {
-		
+	public void deletar(AviaoInterface aviao) throws AviaoException {
+		if(aviao == null) {
+			throw new AviaoException("Não é possível remover um aviao nulo.");
+		}
+		if(buscarPorCod(aviao.getCod()) == null){
+			throw new AviaoException("Não é possível remover um aviao que não está no repositório.");
+		}
 		repAviao.remove(aviao);
 	}
 

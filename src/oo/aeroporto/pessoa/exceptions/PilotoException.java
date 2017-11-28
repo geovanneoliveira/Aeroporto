@@ -1,4 +1,4 @@
-package oo.aeroporto.controle.exceptions;
+package oo.aeroporto.pessoa.exceptions;
 
 public class PilotoException extends Exception {
 	

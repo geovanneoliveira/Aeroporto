@@ -2,6 +2,7 @@ package oo.aeroporto.controle.interf;
 
 import java.util.Date;
 
+import oo.aeroporto.pessoa.exceptions.PassageiroException;
 import oo.aeroporto.pessoa.interf.PassageiroInterface;
 
 public interface ViagemInterface {
@@ -20,9 +21,9 @@ public interface ViagemInterface {
 	
 	public void alterarVagas(int quantidade);
 	
-	public void adicionarPassageiro(PassageiroInterface passageiro);
+	public void adicionarPassageiro(PassageiroInterface passageiro) throws PassageiroException;
 	
-	public void retirarPassageiro(PassageiroInterface passageiro);
+	public void retirarPassageiro(PassageiroInterface passageiro) throws PassageiroException;
 	
 	public PassageiroInterface buscarPassageiro(int cod);
 	
