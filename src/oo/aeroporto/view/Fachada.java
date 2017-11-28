@@ -40,6 +40,15 @@ public class Fachada {
 		}
 	}
 	
+	public void clickRemoverCompanhia(CompanhiaInterface companhia) {
+		try {
+			negocio.RemoverCompanhia(companhia);
+			System.out.println("Companhia Removida Com sucesso!");
+		} catch (CompanhiaException ce){
+			System.err.println("Erro ao Remover companhia, motivo: " + ce.getMessage());
+		}
+	}
+	
 	
 	
 	

@@ -38,15 +38,11 @@ public class Negocio implements NegocioInterf{
 			
 	}
 	
-	public void RemoverCompanhia(CompanhiaInterface companhia) {
-		try {
+	public void RemoverCompanhia(CompanhiaInterface companhia) throws CompanhiaException {
+
 			repositorioCompanhia.deletar(companhia);
 			companhia = null;
-			System.out.println("Companhia Removida Com sucesso!");
-		} catch (CompanhiaException ce){
 			
-			System.err.println("Erro ao Remover companhia, motivo: " + ce.getMessage());
-		}
 	}
 	
 	public CompanhiaInterface buscarCompanhiaCod(int cod) {
