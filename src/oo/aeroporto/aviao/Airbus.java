@@ -1,12 +1,13 @@
 package oo.aeroporto.aviao;
 
+import oo.aeroporto.aviao.exception.AviaoException;
 import oo.aeroporto.aviao.interf.AirbusInterface;
 import oo.aeroporto.pessoa.interf.PilotoInterface;
 
 public class Airbus extends Aviao implements AirbusInterface {
 	
 	//Constructor
-	public Airbus(int cod, int capacidade) {
+	public Airbus(int cod, int capacidade) throws AviaoException {
 		super(cod, capacidade);
 	}
 	

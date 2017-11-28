@@ -1,5 +1,6 @@
 package oo.aeroporto.aviao;
 
+import oo.aeroporto.aviao.exception.AviaoException;
 import oo.aeroporto.aviao.interf.BoeingInterface;
 import oo.aeroporto.pessoa.interf.PilotoInterface;
 
@@ -9,7 +10,7 @@ public class Boeing extends Aviao  implements BoeingInterface{
 	
 	
 	//Constructor
-	public Boeing(int cod, int capacidade) {
+	public Boeing(int cod, int capacidade) throws AviaoException {
 		super(cod, capacidade);
 	}
 	

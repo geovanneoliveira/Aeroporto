@@ -2,6 +2,7 @@ package oo.aeroporto.aviao;
 
 import java.util.ArrayList;
 
+import oo.aeroporto.aviao.exception.AviaoException;
 import oo.aeroporto.aviao.interf.AviaoInterface;
 import oo.aeroporto.controle.interf.ViagemInterface;
 import oo.aeroporto.pessoa.interf.ComissarioInterface;
@@ -24,7 +25,7 @@ public abstract class Aviao implements AviaoInterface{
 	private RepAviaoInterf repAviao;
 	
 	//Constructor
-	public Aviao(int cod, int capacidade) {
+	public Aviao(int cod, int capacidade) throws AviaoException {
 		this.cod = cod;
 		this.capacidade = capacidade;
 		this.piloto = null;
