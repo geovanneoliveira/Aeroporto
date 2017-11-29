@@ -64,7 +64,7 @@ public abstract class Aviao implements AviaoInterface{
 	}
 
 	public void adicionarViagem(ViagemInterface viagem) {
-		if((viagem.passageirosQuantidade() <= this.capacidade)) {
+		if((viagem.getPassageirosQuantidade() <= this.capacidade)) {
 			this.viagem = viagem;
 		}
 	}

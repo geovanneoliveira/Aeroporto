@@ -1,6 +1,7 @@
 package oo.aeroporto.view;
 
-import oo.aeroporto.controle.Companhia;
+
+
 import oo.aeroporto.controle.exceptions.CompanhiaException;
 import oo.aeroporto.controle.interf.CompanhiaInterface;
 import oo.aeroporto.negocio.*;
@@ -10,7 +11,6 @@ import oo.aeroporto.pessoa.exceptions.PassageiroException;
 import oo.aeroporto.pessoa.exceptions.PilotoException;
 import oo.aeroporto.pessoa.interf.PassageiroInterface;
 import oo.aeroporto.pessoa.interf.PilotoInterface;
-import oo.aeroporto.repositorio.interf.*;
 
 public class Fachada {
 
@@ -50,7 +50,32 @@ public class Fachada {
 	}
 	
 	
+	public CompanhiaInterface clickBuscarCompanhiaPorCod(int cod) {
+		CompanhiaInterface companhia = null;
+		companhia = negocio.buscarCompanhiaCod(cod);
+		
+		if(companhia == null) {
+			System.out.println("Nenhuma Companhia localizada!");
+			return companhia;
+		}
+		System.out.println("Companhia localizada com sucesso!");
+		return companhia;
+	}
 	
+	public CompanhiaInterface clickBuscarCompanhiaPorNome(String nome) {
+		CompanhiaInterface companhia = null;
+		companhia = negocio.buscarCompanhiaNome(nome);
+		
+		if(companhia == null) {
+			System.out.println("Nenhuma Companhia localizada!");
+			return companhia;
+		}
+		System.out.println("Companhia localizada com sucesso!");
+		return companhia;
+	}
+	
+	
+	//PILOTO
 	
 	
 	

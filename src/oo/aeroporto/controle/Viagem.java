@@ -1,17 +1,13 @@
 package oo.aeroporto.controle;
 
 import java.util.Date;
+import java.util.ArrayList;
+
 
 import oo.aeroporto.controle.exceptions.ViagemException;
 import oo.aeroporto.controle.interf.ViagemInterface;
 import oo.aeroporto.pessoa.exceptions.PassageiroException;
 import oo.aeroporto.pessoa.interf.PassageiroInterface;
-import oo.aeroporto.repositorio.RepPassageiro;
-import oo.aeroporto.repositorio.RepViagem;
-import oo.aeroporto.repositorio.interf.RepPassageiroInterf;
-import oo.aeroporto.repositorio.interf.RepViagemInterf;
-
-import java.util.ArrayList;
 
 
 public class Viagem implements ViagemInterface{
@@ -25,8 +21,7 @@ public class Viagem implements ViagemInterface{
 	private long duracao;
 	private int vagasDisponiveis;
 	private ArrayList<PassageiroInterface> passageiros = new ArrayList<PassageiroInterface>();
-	private RepPassageiroInterf repositorioPassageiro;
-	private RepViagemInterf repViagem;
+
 	
 	
 	public Viagem(int cod, String aeroportoOrigem, String aeroportoDestino, Date dataHoraDeEmbarque,
@@ -45,14 +40,8 @@ public class Viagem implements ViagemInterface{
 		
 		if(passageiro != null)	this.passageiros = passageiro;
 		setDuracao(dataHoraDeEmbarque,dataHoraDeDesembarque);
-		this.repositorioPassageiro = RepPassageiro.getInstance();
-		this.repViagem = RepViagem.getInstance();
-		repViagem.adicionar(this);
 	}
 
-
-
-	
 	//Methods 
 
 	private void setDuracao(Date dataHoraDeEmbarque, Date dataHoraDeDesembarque) {
@@ -72,55 +61,79 @@ public class Viagem implements ViagemInterface{
 		
 	}
 
-	public void alterarOrigem(String novo) {
+	public void alterarOrigem(String novo) throws ViagemException{
 		if(novo != null) {
 			this.aeroportoOrigem = novo;
 		}
 		else {
-			System.out.println("erro ao alterar a origem");
+			throw new ViagemException("a Origem não deve ser nula!.");
 		}
 	}
 	
-	public void alterarDestino(String novo) {
+	public void alterarDestino(String novo) throws ViagemException {
 		if(novo != null) {
 			this.aeroportoDestino = novo;
 		}
 		else {
-			System.out.println("erro ao alterar o destino");
+			throw new ViagemException("O destino não deve ser nulo!");
 		}
 	}
 	
-	public void alterarHoraEmbarque(Date hora) {
+	public void alterarHoraEmbarque(Date hora) throws ViagemException  {
+		if(hora == null) {
+			throw new ViagemException("O horario não deve ser nulo!");
+		}
 		this.dataHoraDeEmbarque = hora;
 		setDuracao(this.dataHoraDeEmbarque,this.dataHoraDeDesembarque);
 	}
 	
-	public void alterarHoraDesembarque(Date hora) {
+	public void alterarHoraDesembarque(Date hora) throws ViagemException {
+		if(hora == null) {
+			throw new ViagemException("O horario não deve ser nulo!");
+		}
 		this.dataHoraDeDesembarque = hora;
 		setDuracao(this.dataHoraDeEmbarque,this.dataHoraDeDesembarque);
 	}
 	
+	public int getPassageirosQuantidade() {
+		return this.passageiros.size();
+	}
 	
-	public void alterarVagas(int quantidade) {
+	public int getCod() {
+		return cod;
+	}
+	
+	public void alterarVagas(int quantidade) throws PassageiroException{
 		if(quantidade > 0 ) {
 			this.vagasDisponiveis = quantidade;
 		}
 		else {
-			System.out.println("Quantidade de vagas invalida");
+			throw new PassageiroException("Quantidade de vagas invalida!");
 		}
 	}
+
 	
 	public void adicionarPassageiro(PassageiroInterface passageiro) throws PassageiroException {
+		if(passageiro == null) {
+			throw new PassageiroException("Passageiro não pode ser null!");
+		}
+		if(buscarPassageiro(passageiro.getCPF()) != null) {
+			throw new PassageiroException("Passageiro já existe!");
+		}
 		this.passageiros.add(passageiro);
-		this.repositorioPassageiro.adicionar(passageiro);
 	}
 	
 	public void retirarPassageiro(PassageiroInterface passageiro) throws PassageiroException {
+		if(passageiro == null) {
+			throw new PassageiroException("Passageiro não pode ser null!");
+		}
+		if(buscarPassageiro(passageiro.getCPF()) == null) {
+			throw new PassageiroException("Passageiro não existe!");
+		}
 		this.passageiros.remove(passageiro);
-		this.repositorioPassageiro.deletar(passageiro);
 	}
 	
-	public PassageiroInterface buscarPassageiro(int CPF) {
+	public PassageiroInterface buscarPassageiro(String CPF) {
 		for(int i = 0; i < this.passageiros.size(); ++i) {
 			
 			if(this.passageiros.get(i).getCPF().equals(CPF)) {
@@ -131,16 +144,8 @@ public class Viagem implements ViagemInterface{
 		
 		return null;
 	}
-	
-	public int passageirosQuantidade() {
-		return this.passageiros.size();
-	}
-	
-	public int getCod() {
-		return cod;
-	}
 }
-
+	
 /**
 *Conversor de STRING para DATE e TIME
 *String str = "10:20";
