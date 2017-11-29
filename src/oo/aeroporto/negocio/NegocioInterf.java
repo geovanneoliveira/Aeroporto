@@ -57,7 +57,7 @@ public interface NegocioInterf {
 	public ViagemInterface buscarViagem(int cod);
 	
 	// AVIAO
-	public AviaoInterface cadastraAviao(int cod, int capacidade, String modelo) throws AviaoException;
+	public AviaoInterface cadastrarAviao(int cod, int capacidade, String modelo) throws AviaoException;
 	
 	public void removerAviao(AviaoInterface aviao) throws AviaoException;
 	

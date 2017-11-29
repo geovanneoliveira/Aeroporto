@@ -225,7 +225,7 @@ public class Negocio implements NegocioInterf{
 	
 	// AVIAO
 	
-	public AviaoInterface cadastraAviao(int cod, int capacidade, String modelo) throws AviaoException {
+	public AviaoInterface cadastrarAviao(int cod, int capacidade, String modelo) throws AviaoException {
 		if(modelo.equals("airbus")) {
 			AviaoInterface aviao = new Airbus(cod,capacidade);
 			repositorioAviao.adicionar(aviao);

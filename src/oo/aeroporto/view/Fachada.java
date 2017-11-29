@@ -2,8 +2,14 @@ package oo.aeroporto.view;
 
 
 
+import java.sql.Date;
+
+import oo.aeroporto.aviao.exception.AviaoException;
+import oo.aeroporto.aviao.interf.AviaoInterface;
 import oo.aeroporto.controle.exceptions.CompanhiaException;
+import oo.aeroporto.controle.exceptions.ViagemException;
 import oo.aeroporto.controle.interf.CompanhiaInterface;
+import oo.aeroporto.controle.interf.ViagemInterface;
 import oo.aeroporto.negocio.*;
 import oo.aeroporto.pessoa.Passageiro;
 import oo.aeroporto.pessoa.Piloto;
@@ -101,7 +107,6 @@ public class Fachada {
 		}
 	}
 	
-	
 	public PilotoInterface clickBuscarPiloto(int cod) {
 		PilotoInterface piloto = null;
 		piloto = negocio.buscarPiloto(cod);
@@ -129,7 +134,6 @@ public class Fachada {
 		}
 	}
 	
-	
 	public void clickRemoverComissario(ComissarioInterface comissario) {
 		try {
 			negocio.removerComissario(comissario);
@@ -151,12 +155,137 @@ public class Fachada {
 		return comissario;
 	}
 	
+	//PASSAGEIRO
+	
+	public PassageiroInterface cadastrarPassageiro(String CPF, String nome, int idade, String telefoneProprio, String telefoneDeEmergencia) {
+		PassageiroInterface passageiro = null;
+		try {
+			passageiro = negocio.cadastrarPassageiro(CPF, nome, idade, telefoneProprio, telefoneDeEmergencia);
+			System.out.println("Comissario cadastrado com sucesso!");
+			return passageiro;
+		} catch (PassageiroException pe) {
+			System.err.println("Erro ao cadastrar passageiro, motivo: " + pe.getMessage());
+			return passageiro;
+
+		}
+	}
+	
+	public void clickRemoverPassageiro(PassageiroInterface passageiro) {
+		try {
+			negocio.removerPassageiro(passageiro);
+			System.out.println("Passageiro Removido Com sucesso!");
+		} catch (PassageiroException pe){
+			System.err.println("Erro ao Remover Passageiro, motivo: " + pe.getMessage());
+		}
+	}
+	
+	public PassageiroInterface clickBuscarPassageiroPorCod(String cod) {
+		PassageiroInterface passageiro = null;
+		passageiro = negocio.buscarPassageiroCod(cod);
+		
+		if(passageiro == null) {
+			System.out.println("Nenhum Passageiro localizado!");
+			return passageiro;
+		}
+		System.out.println("Passageiro localizado com sucesso!");
+		return passageiro;
+	}
+	
+	public PassageiroInterface clickBuscarPassageiroPorNome(String nome) {
+		PassageiroInterface passageiro = null;
+		passageiro = negocio.buscarPassageiroNome(nome);
+		
+		if(passageiro == null) {
+			System.out.println("Nenhum Passageiro localizado!");
+			return passageiro;
+		}
+		System.out.println("Passageiro localizado com sucesso!");
+		return passageiro;
+	}
 	
 	
+	// VIAGEM
+	public ViagemInterface cadastrarViagem(int cod, String aeroportoOrigem, String aeroportoDestino, Date dataHoraDeEmbarque, Date dataHoraDeDesembarque,int vagasDisponiveis) {
+		ViagemInterface viagem = null;
+		try {
+			viagem = negocio.cadastrarViagem(cod, aeroportoOrigem, aeroportoDestino, dataHoraDeEmbarque, dataHoraDeDesembarque, vagasDisponiveis);
+			System.out.println("Viagem cadastrada com sucesso!");
+			return viagem;
+		} catch (ViagemException ve) {
+			System.err.println("Erro ao cadastrar viagem, motivo: " + ve.getMessage());
+			return viagem;
+		}
+		
+	}
+	
+	public void removerViagem(ViagemInterface viagem){
+		try {
+			negocio.removerViagem(viagem);
+			System.out.println("Viagem Removido Com sucesso!");
+		} catch (ViagemException ve) {
+			System.err.println("Erro ao Remover comissario, motivo: " + ve.getMessage());
+		}
+	}
+	
+	public ViagemInterface buscarViagem(int cod) {
+		ViagemInterface viagem = null;
+			viagem = negocio.buscarViagem(cod);
+			
+			if(viagem == null) {
+				System.out.println("Nenhum Passageiro localizado!");
+				return viagem;
+			}
+			System.out.println("Passageiro localizado com sucesso!");
+			return viagem;
+		
+	}
 	
 	
+	// AVIAO
+	public AviaoInterface cadastraAviao(int cod, int capacidade, String modelo) {
+		AviaoInterface aviao = null;
+		try {
+			aviao = negocio.cadastrarAviao(cod, capacidade, modelo);
+			System.out.println("Aviao cadastrado com sucesso!");
+			return aviao;
+		} catch (AviaoException ae) {
+			System.err.println("Erro ao cadastrar aviao, motivo: " + ae.getMessage());
+			return aviao;
+		}
+	}
+	
+	public void removerAviao(AviaoInterface aviao) {
+		try {
+			negocio.removerAviao(aviao);
+			System.out.println("Aviao Removido Com sucesso!");
+		} catch (AviaoException ae) {
+			System.err.println("Erro ao Remover aviao, motivo: " + ae.getMessage());
+		}
+	}
+	
+	public AviaoInterface buscarAviao(int cod) {
+		AviaoInterface aviao = null;
+		aviao = negocio.buscarAviao(cod);
+		
+		if(aviao == null) {
+			System.out.println("Nenhum Aviao localizado!");
+			return aviao;
+		}
+		System.out.println("Aviao localizado com sucesso!");
+		return aviao;
+	}
 	
 		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public PilotoInterface clickCadasjktrarPiloto(String CPF, String nome, int idade, String telefoneProprio, String CTPS, int breve, double horasDeVoo) {
 		try {
