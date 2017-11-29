@@ -50,6 +50,11 @@ public class Fachada {
 			System.err.println(e.getMessage());
 		}
 	}
+	
+	public void clickPousarAviao(AviaoInterface aviao) throws AviaoException, TorreControleException {
+		if (aviao == null) throw new AviaoException("Avião Inválido");
+		negocio.aterrissar(aviao);
+	}
 	//COMPANHIA
 	
 	public CompanhiaInterface clickCadastrarCompanhia(int id, String nome) {

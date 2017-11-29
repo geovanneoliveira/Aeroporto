@@ -241,7 +241,7 @@ public class Negocio implements NegocioInterf{
 			torreDeControle.setCounter(torreDeControle.getCounter() - 1);
 			aviao.setStatus(2);
 		}catch(TorreControleException e) {
-			throw new TorreControleException("Avião com o taxi negado\nMotivo: "+e.getMessage());
+			throw new TorreControleException("Avião com o taxi negado. Motivo: "+e.getMessage());
 		}
 	}
 
@@ -252,7 +252,7 @@ public class Negocio implements NegocioInterf{
 			torreDeControle.setCounter(torreDeControle.getCounter() - 1);
 			aviao.setStatus(0);
 		}catch (TorreControleException e){
-			throw new TorreControleException("Avião com o taxi negado\nMotivo: "+e.getMessage());
+			throw new TorreControleException("Avião com o taxi negado. Motivo: "+e.getMessage());
 		}
 	}
 }
