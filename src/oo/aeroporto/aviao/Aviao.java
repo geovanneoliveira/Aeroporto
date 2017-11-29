@@ -128,6 +128,7 @@ public abstract class Aviao implements AviaoInterface{
 	}
 	
 	public int quantComissarios() {
+		if (this.comissario == null) return 0;
 		return this.comissario.size();
 	}
 	

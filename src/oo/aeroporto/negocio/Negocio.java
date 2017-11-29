@@ -8,10 +8,13 @@ import oo.aeroporto.aviao.Aviao;
 import oo.aeroporto.aviao.exception.AviaoException;
 import oo.aeroporto.aviao.interf.AviaoInterface;
 import oo.aeroporto.controle.Companhia;
+import oo.aeroporto.controle.TorreDeControle;
 import oo.aeroporto.controle.Viagem;
 import oo.aeroporto.controle.exceptions.CompanhiaException;
+import oo.aeroporto.controle.exceptions.TorreControleException;
 import oo.aeroporto.controle.exceptions.ViagemException;
 import oo.aeroporto.controle.interf.CompanhiaInterface;
+import oo.aeroporto.controle.interf.TorreControleInterface;
 import oo.aeroporto.controle.interf.ViagemInterface;
 import oo.aeroporto.pessoa.Comissario;
 import oo.aeroporto.pessoa.Passageiro;
@@ -35,8 +38,9 @@ public class Negocio implements NegocioInterf{
 	private RepViagemInterf repositorioViagem;
 	private RepCompanhiaInterf repositorioCompanhia;
 	private RepPassageiroInterf repositorioPassageiro;
+	private TorreControleInterface torreDeControle;
 	
-	public Negocio() {
+	public Negocio(int quantidade) {
 		
 		repositorioAviao = RepAviao.getInstance();
 		repositorioPiloto = RepPiloto .getInstance();
@@ -44,7 +48,13 @@ public class Negocio implements NegocioInterf{
 		repositorioViagem = RepViagem.getInstance();
 		repositorioCompanhia = RepCompanhia.getInstance();
 		repositorioPassageiro = RepPassageiro.getInstance();
+		torreDeControle = TorreDeControle.getInstance(quantidade);
 		
+	}
+	
+	//TORRE DE CONTROLE
+	public TorreControleInterface obterTorre() {
+		return torreDeControle;
 	}
 	
 	//COMPANHIA
@@ -66,87 +76,46 @@ public class Negocio implements NegocioInterf{
 	public CompanhiaInterface buscarCompanhiaCod(int cod) {
 		CompanhiaInterface companhia = null;
 		companhia = repositorioCompanhia.buscarPorCod(cod);
-		
-		if(companhia == null) {
-			return companhia;
-		}
 		return companhia;
 	}
 	
 	public CompanhiaInterface buscarCompanhiaNome(String nome) {
 		CompanhiaInterface companhia = null;
 		companhia = repositorioCompanhia.buscarPorNome(nome);
-		
-		if(companhia == null) {
-			return companhia;
-		}
 		return companhia;
 	}
 
 	//PILOTO
 	
-	public PilotoInterface CadastrarPiloto(String CPF, String nome, int idade, String telefoneProprio, String CTPS, int breve, double horasDeVoo) throws PilotoException {
-	
+	public PilotoInterface CadastrarPiloto(CompanhiaInterface companhia, String CPF, String nome, int idade, String telefoneProprio, String CTPS, int breve, double horasDeVoo) throws PilotoException, CompanhiaException {
+		if (companhia == null) throw new CompanhiaException("Companhia Inválida");
 		PilotoInterface piloto = new Piloto(CPF, nome, idade, telefoneProprio, CTPS, breve, horasDeVoo);
+		companhia.inserirPiloto(piloto);
 		repositorioPiloto.adicionar(piloto);
 		return piloto;
 	}
 
-	public void RemoverPiloto(PilotoInterface piloto) throws PilotoException {
+	public void RemoverPiloto(CompanhiaInterface companhia, PilotoInterface piloto) throws PilotoException, CompanhiaException {
+		companhia.removerPiloto(piloto);
 		repositorioPiloto.deletar(piloto);
 		piloto = null;
 	}
 	
-	public PilotoInterface buscarPiloto(int cod) {
+	public PilotoInterface buscarPiloto(CompanhiaInterface companhia, int cod) {
 		PilotoInterface piloto = null;
-		piloto = repositorioPiloto.buscarPorCod(cod);
-		
-		if(piloto == null) {
-			return piloto;
-		}
+		piloto = companhia.buscarPiloto(cod);
 		return piloto;
 	}
 	
-	public double obterHorasDeVoo(PilotoInterface piloto) throws PilotoException {
-		if(piloto == null) {
-			throw new PilotoException("Piloto inválido!");
-		}
-		double horas =  piloto.getHorasDeVoo();
-		return horas;
-	}
-	
-	public String obteridentificador (PilotoInterface piloto) throws PilotoException {
-		if(piloto == null) {
-			throw new PilotoException("Piloto inválido!");
-		}
-		return piloto.listarIdentificador();
-	}
-	
-	public int obterBreve(PilotoInterface piloto) throws PilotoException {
-		if(piloto == null) {
-			throw new PilotoException("Piloto inválido!");
-		}
-		return piloto.getBreve();
-	}
-	
-	public void addhorasVoo(PilotoInterface piloto, double horas) throws PilotoException {
-		if(piloto == null) {
-			throw new PilotoException("Piloto inválido!");
-		}
-		try {
-			piloto.addHorasDeVoo(horas);
-		}
-		catch (Exception e) {
-			e.getMessage();
-		}
-	}
-	
-	
+		
 	
 	// COMISSARIO
+	//@denini
 	
-	public ComissarioInterface cadastrarComissrio(String CPF, String nome, int idade, String telefoneProprio, String CTPS, int ANAC) throws ComissarioException {
+	public ComissarioInterface cadastrarComissrio(CompanhiaInterface companhia, String CPF, String nome, int idade, String telefoneProprio, String CTPS, int ANAC) throws ComissarioException, CompanhiaException {
 		ComissarioInterface comissario = new Comissario(CPF, nome, idade, telefoneProprio, CTPS, ANAC);
+		if(companhia == null) throw new CompanhiaException("Companhia Inválida");
+		companhia.inserirComissario(comissario);
 		repositorioComissario.adicionar(comissario);
 		return comissario;
 	}
@@ -251,5 +220,39 @@ public class Negocio implements NegocioInterf{
 			return aviao;
 		}
 		return aviao;	
+	}
+	
+	//TORRE DE CONTROLE
+	private void taxi(AviaoInterface aviao) throws TorreControleException{
+		if (aviao == null) throw new TorreControleException("Falta Aviao");
+		else if (aviao.checkList() == false) throw new TorreControleException("Checklist Incompleto");
+		else if (aviao.getStatus() == 1) throw new TorreControleException("O avião já está na pista");
+		else if (torreDeControle.getCounter() >= torreDeControle.getQuantidadeDePistas()) throw new TorreControleException("As pistas estão lotadas");
+		else {
+			torreDeControle.setCounter(torreDeControle.getCounter() - 1);
+			aviao.setStatus(1);
+		}
+	}
+
+	@Override
+	public void decolar(AviaoInterface aviao) throws TorreControleException{
+		try {
+			this.taxi(aviao);
+			torreDeControle.setCounter(torreDeControle.getCounter() - 1);
+			aviao.setStatus(2);
+		}catch(TorreControleException e) {
+			throw new TorreControleException("Avião com o taxi negado\nMotivo: "+e.getMessage());
+		}
+	}
+
+	@Override
+	public void aterrissar(AviaoInterface aviao) throws TorreControleException{
+		try {
+			this.taxi(aviao);
+			torreDeControle.setCounter(torreDeControle.getCounter() - 1);
+			aviao.setStatus(0);
+		}catch (TorreControleException e){
+			throw new TorreControleException("Avião com o taxi negado\nMotivo: "+e.getMessage());
+		}
 	}
 }

@@ -5,8 +5,10 @@ import java.sql.Date;
 import oo.aeroporto.aviao.exception.AviaoException;
 import oo.aeroporto.aviao.interf.AviaoInterface;
 import oo.aeroporto.controle.exceptions.CompanhiaException;
+import oo.aeroporto.controle.exceptions.TorreControleException;
 import oo.aeroporto.controle.exceptions.ViagemException;
 import oo.aeroporto.controle.interf.CompanhiaInterface;
+import oo.aeroporto.controle.interf.TorreControleInterface;
 import oo.aeroporto.controle.interf.ViagemInterface;
 import oo.aeroporto.pessoa.exceptions.ComissarioException;
 import oo.aeroporto.pessoa.exceptions.PassageiroException;
@@ -16,6 +18,10 @@ import oo.aeroporto.pessoa.interf.PassageiroInterface;
 import oo.aeroporto.pessoa.interf.PilotoInterface;
 
 public interface NegocioInterf {
+	
+	
+	//TORRE DE CONTROLE
+	public TorreControleInterface obterTorre();
 	
 	//	COMPANHIA
 	public CompanhiaInterface CadastrarCompanhia(int id, String nome) throws CompanhiaException;
@@ -27,14 +33,14 @@ public interface NegocioInterf {
 	public CompanhiaInterface buscarCompanhiaNome(String nome);
 	
 	//	PILOTO
-	public PilotoInterface CadastrarPiloto(String CPF, String nome, int idade, String telefoneProprio, String CTPS, int breve, double horasDeVoo) throws PilotoException;
+	public PilotoInterface CadastrarPiloto(CompanhiaInterface companhia, String CPF, String nome, int idade, String telefoneProprio, String CTPS, int breve, double horasDeVoo) throws PilotoException, CompanhiaException;
 	
-	public void RemoverPiloto(PilotoInterface piloto) throws PilotoException;
+	public void RemoverPiloto(CompanhiaInterface companhia, PilotoInterface piloto) throws PilotoException, CompanhiaException;
 	
-	public PilotoInterface buscarPiloto(int cod);
+	public PilotoInterface buscarPiloto(CompanhiaInterface companhia, int cod);
 	
 	// COMISSARIO
-	public ComissarioInterface cadastrarComissrio(String CPF, String nome, int idade, String telefoneProprio, String CTPS, int ANAC) throws ComissarioException;
+	public ComissarioInterface cadastrarComissrio(CompanhiaInterface companhia, String CPF, String nome, int idade, String telefoneProprio, String CTPS, int ANAC) throws ComissarioException, CompanhiaException;
 	
 	public void removerComissario(ComissarioInterface comissario) throws ComissarioException;
 	
@@ -62,4 +68,8 @@ public interface NegocioInterf {
 	public void removerAviao(AviaoInterface aviao) throws AviaoException;
 	
 	public AviaoInterface buscarAviao(int cod);
+	
+	//TORRE CONTROLE
+	public void decolar(AviaoInterface aviao) throws TorreControleException;
+	public void aterrissar(AviaoInterface aviao) throws TorreControleException;
 }

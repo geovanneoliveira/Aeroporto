@@ -6,4 +6,5 @@ public class CompanhiaException extends Exception {
 		super(mensagem);
 	}
 
+
 }

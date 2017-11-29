@@ -7,14 +7,12 @@ public interface TorreControleInterface {
 	
 	public String status();
 	
-	public void decolar(AviaoInterface aviao) throws TorreControleException;
-	
-	public void aterrissar(AviaoInterface aviao) throws TorreControleException;
-	
 	public void setQuantidadeDePistas(int quatidadeDePistas);
 	
 	public int getQuantidadeDePistas();
 	
-	public int getCod();
+	public void setCounter(int counter);
 	
+	public int getCounter();
+		
 }

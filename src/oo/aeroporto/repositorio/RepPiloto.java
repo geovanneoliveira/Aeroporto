@@ -11,7 +11,7 @@ public class RepPiloto implements RepPilotoInterf{
 	private ArrayList<PilotoInterface> repPiloto = new ArrayList<PilotoInterface>();
 	private static RepPiloto instance = null;	//Singleton
 	
-	//Construtor
+	//constructor
 	private RepPiloto() {}
 	
 	//Singleton

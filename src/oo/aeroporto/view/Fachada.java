@@ -7,8 +7,10 @@ import java.sql.Date;
 import oo.aeroporto.aviao.exception.AviaoException;
 import oo.aeroporto.aviao.interf.AviaoInterface;
 import oo.aeroporto.controle.exceptions.CompanhiaException;
+import oo.aeroporto.controle.exceptions.TorreControleException;
 import oo.aeroporto.controle.exceptions.ViagemException;
 import oo.aeroporto.controle.interf.CompanhiaInterface;
+import oo.aeroporto.controle.interf.TorreControleInterface;
 import oo.aeroporto.controle.interf.ViagemInterface;
 import oo.aeroporto.negocio.*;
 import oo.aeroporto.pessoa.Passageiro;
@@ -25,14 +27,29 @@ public class Fachada {
 	NegocioInterf negocio = null;
 	
 	//Constructor
-	public Fachada() {
-		negocio = new Negocio();
+	public Fachada(int quantidade) {
+		negocio = new Negocio(quantidade);
 	}
 	
 	
 	//Buttons
 	
+	//TORRE DE CONTROLE
+	public TorreControleInterface obterTorre() {
+		return negocio.obterTorre();
+	}
 	
+	public void clickDecolarAviao(AviaoInterface aviao) {
+		if (aviao == null) {
+			System.err.println("Avião Inválido");
+			return;
+		}
+		try{
+			negocio.decolar(aviao);
+		}catch (TorreControleException e) {
+			System.err.println(e.getMessage());
+		}
+	}
 	//COMPANHIA
 	
 	public CompanhiaInterface clickCadastrarCompanhia(int id, String nome) {
@@ -85,31 +102,36 @@ public class Fachada {
 	
 	//PILOTO
 	
-	public PilotoInterface clickCadastrarPiloto(String CPF, String nome, int idade, String telefoneProprio, String CTPS, int breve, double horasDeVoo) throws PilotoException {
+	public PilotoInterface clickCadastrarPiloto(CompanhiaInterface companhia, String CPF, String nome, int idade, String telefoneProprio, String CTPS, int breve, double horasDeVoo) {
 		PilotoInterface piloto = null;
 		try {
-		piloto = negocio.CadastrarPiloto(CPF, nome, idade, telefoneProprio, CTPS, breve, horasDeVoo);
+		piloto = negocio.CadastrarPiloto(companhia, CPF, nome, idade, telefoneProprio, CTPS, breve, horasDeVoo);
 		System.out.println("Piloto cadastrado com sucesso!");
 		return piloto;
 		
 		} catch (PilotoException pe) {
 			System.err.println("Erro ao cadastrar piloto, motivo: " + pe.getMessage());
 			return null;
+		}catch (CompanhiaException ce) {
+			System.err.println("Erro ao cadastrar piloto, motivo: " + ce.getMessage());
+			return null;
 		}
 	}
 	
-	public void clickRemoverPiloto(PilotoInterface piloto) {
+	public void clickRemoverPiloto(CompanhiaInterface companhia, PilotoInterface piloto) {
 		try {
-			negocio.RemoverPiloto(piloto);
+			negocio.RemoverPiloto(companhia, piloto);
 			System.out.println("Piloto Removido Com sucesso!");
 		} catch (PilotoException pe){
 			System.err.println("Erro ao Remover Piloto, motivo: " + pe.getMessage());
+		} catch (CompanhiaException ce) {
+			System.err.println("Erro ao Remover Piloto, motivo: " + ce.getMessage());
 		}
 	}
 	
-	public PilotoInterface clickBuscarPiloto(int cod) {
+	public PilotoInterface clickBuscarPiloto(CompanhiaInterface companhia, int cod) {
 		PilotoInterface piloto = null;
-		piloto = negocio.buscarPiloto(cod);
+		piloto = negocio.buscarPiloto(companhia,cod);
 		
 		if(piloto == null) {
 			System.out.println("Nenhuma Piloto localizada!");
@@ -121,16 +143,20 @@ public class Fachada {
 	
 	//COMISSARIO
 	
-	public ComissarioInterface clickCadastrarComissario(String CPF, String nome, int idade, String telefoneProprio, String CTPS,int ANAC) throws PilotoException {
+	public ComissarioInterface clickCadastrarComissario(CompanhiaInterface companhia, String CPF, String nome, int idade, String telefoneProprio, String CTPS,int ANAC) throws PilotoException {
 		ComissarioInterface comissario = null;
 		try {
-		comissario = negocio.cadastrarComissrio(CPF, nome, idade, telefoneProprio, CTPS, ANAC);
+		comissario = negocio.cadastrarComissrio(companhia, CPF, nome, idade, telefoneProprio, CTPS, ANAC);
 		System.out.println("Comissario cadastrado com sucesso!");
 		return comissario;
 		
 		} catch (ComissarioException ce) {
 			System.err.println("Erro ao cadastrar comissario, motivo: " + ce.getMessage());
 			return null;
+		} catch (CompanhiaException coe) {
+			System.err.println("Erro ao cadastrar comissario, motivo: " + coe.getMessage());
+			return null;
+
 		}
 	}
 	
@@ -274,69 +300,5 @@ public class Fachada {
 		System.out.println("Aviao localizado com sucesso!");
 		return aviao;
 	}
-	
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public PilotoInterface clickCadasjktrarPiloto(String CPF, String nome, int idade, String telefoneProprio, String CTPS, int breve, double horasDeVoo) {
-		try {
-			PilotoInterface novoPiloto = new Piloto(CPF, nome, idade, telefoneProprio, CTPS, breve, horasDeVoo);
-			System.out.println("Piloto cadastrado com sucesso!");
-			return novoPiloto;
-		} catch (PilotoException pe) {
-			
-			System.err.println("Erro ao cadastrar piloto, motivo: " + pe.getMessage());
-		}
-		return null;
-	}
-	
-	
-	public void clickCadastroPilotoEmCompanhia(CompanhiaInterface companhia, PilotoInterface piloto) {
-		try {
-			if(companhia == null){
-				throw new CompanhiaException("Companhia não foi encotrada.");
-			}
-			if(piloto == null){
-				throw new CompanhiaException("Piloto não foi encotrado.");
-			}
-			
-			companhia.inserirPiloto(piloto);
-			System.out.println("Piloto " + piloto.getNome() + " adicionado para companhia " + companhia.getNome());
-		} catch (CompanhiaException ce) {
-			System.err.println("Erro ao cadastrar piloto em companhia, motivo: " + ce.getMessage());
-		}
-	}
-	
-	
-	
-	//PASSAGEIROS
-	
-	
-	public PassageiroInterface clickCadastrarPassageiro(String CPF, String nome, int idade, String telefoneProprio,String telefoneDeEmergencia) {
-		try {
-			PassageiroInterface novoPassageiro = new Passageiro(CPF, nome, idade, telefoneProprio, telefoneDeEmergencia);
-			System.out.println("Passagei cadastrado com sucesso!");
-			return novoPassageiro;
-		} catch (PassageiroException pe) {
-			System.err.println("Erro ao Cadastrar piloto, motivo: " + pe.getMessage());
-		}
-		return null;
-	}
-	
-	
-	public void clickDeletarPassageiro(PassageiroInterface passageiro) {
-			
-		}
-		
-	
 	
 }

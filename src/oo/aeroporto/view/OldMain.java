@@ -23,7 +23,7 @@ public class OldMain {
 		PilotoInterface piloto = main.clickCadastrarPiloto("08945641459", "Thomás", 19, "999843797","sfwe", 20, 450);
 		main.clickCadastroPilotoEmCompanhia(companhia, piloto);
 		main.clickCadastroPilotoEmCompanhia(companhia, piloto);*/
-		TorreControleInterface torre = new TorreDeControle(4, 5);
+		//TorreControleInterface torre = new TorreDeControle(4, 5);
 		//try {
 		//	torre.taxi(null);
 		//}catch (TorreControleException e){
