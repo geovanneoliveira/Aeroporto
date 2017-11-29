@@ -2,19 +2,20 @@ package oo.aeroporto.aviao.interf;
 
 import java.util.ArrayList;
 
+import oo.aeroporto.aviao.exception.AviaoException;
 import oo.aeroporto.controle.interf.ViagemInterface;
 import oo.aeroporto.pessoa.interf.ComissarioInterface;
 import oo.aeroporto.pessoa.interf.PilotoInterface;
 
 public interface AviaoInterface {
 	
-	public String listarInformacoes();
+	public abstract String listarInformacoes();
 	
 	public String listarIdentificacao();
 	
-	public void adicionarPiloto(PilotoInterface piloto);
+	public void adicionarPiloto(PilotoInterface piloto) throws AviaoException;
 	
-	public void adicionarCoPiloto(PilotoInterface piloto);
+	public void adicionarCoPiloto(PilotoInterface coPiloto) throws AviaoException;
 	
 	public void adicionarViagem(ViagemInterface viagem);
 	
@@ -32,7 +33,7 @@ public interface AviaoInterface {
 	
 	public ArrayList<ComissarioInterface> getComissario();
 		
-	public int checkList();
+	public boolean checkList();
 	
 	public int getStatus();
 	

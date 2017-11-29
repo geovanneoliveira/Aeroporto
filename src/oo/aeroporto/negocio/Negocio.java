@@ -115,6 +115,34 @@ public class Negocio implements NegocioInterf{
 		return horas;
 	}
 	
+	public String obteridentificador (PilotoInterface piloto) throws PilotoException {
+		if(piloto == null) {
+			throw new PilotoException("Piloto inválido!");
+		}
+		return piloto.listarIdentificador();
+	}
+	
+	public int obterBreve(PilotoInterface piloto) throws PilotoException {
+		if(piloto == null) {
+			throw new PilotoException("Piloto inválido!");
+		}
+		return piloto.getBreve();
+	}
+	
+	public void addhorasVoo(PilotoInterface piloto, double horas) throws PilotoException {
+		if(piloto == null) {
+			throw new PilotoException("Piloto inválido!");
+		}
+		try {
+			piloto.addHorasDeVoo(horas);
+		}
+		catch (Exception e) {
+			e.getMessage();
+		}
+	}
+	
+	
+	
 	// COMISSARIO
 	
 	public ComissarioInterface cadastrarComissrio(String CPF, String nome, int idade, String telefoneProprio, String CTPS, int ANAC) throws ComissarioException {

@@ -1,48 +1,33 @@
 package oo.aeroporto.aviao;
 
 import oo.aeroporto.aviao.exception.AviaoException;
-import oo.aeroporto.aviao.interf.AirbusInterface;
+import oo.aeroporto.aviao.interf.AviaoInterface;
 import oo.aeroporto.pessoa.interf.PilotoInterface;
 
-public class Airbus extends Aviao implements AirbusInterface {
+public class Airbus extends Aviao implements AviaoInterface{
 	
 	//Constructor
-	public Airbus(int cod, int capacidade) throws AviaoException {
+	public Airbus(int cod, int capacidade) {
 		super(cod, capacidade);
 	}
 	
 	@Override
 	public String listarInformacoes() {
-		String s = "\nCódigo do Avião: "+ getCod() + "\nCapacidade: "+ getCapacidade();
-				if(getPiloto() != null) s+= "\nPiloto: "+getPiloto().getNome();
-				if(getCoPiloto() != null) s+= "\nCo-Piloto: "+ getCoPiloto().getNome(); 
-				if(getViagem() != null) s+="\nViagem do Avião: "+ getViagem().getCod();
-				if(getComissario() != null) s+="\nComissários:" + quantComissarios();
-				s += "\nSatus do Avião: "+ getStatus();
-				s += ("\nModelo do Avião: Airbus");
+		String s = super.listarInformacoes();
+		s += ("\nModelo do Avião: Airbus");
 		return s;
-		
 	}
 	
 	@Override
-	public void adicionarPiloto(PilotoInterface piloto) {
-		if (piloto.getHorasDeVoo() >= 1000) super.adicionarPiloto(piloto);
-		else System.out.println("Não é possível adicionar esse pilot, ele não tem as horas de voo necessarias");
+	public void adicionarPiloto(PilotoInterface piloto) throws AviaoException {
+		if (piloto == null) throw new AviaoException("Piloto Inválido");
+		else if (piloto.getHorasDeVoo() < 1000) throw new AviaoException("Piloto não possui as horas de voo necessárias");
+		else super.adicionarPiloto(piloto);
 	}
 	
 	@Override
-	public int checkList(){
-		if (this.quantComissarios() >= 3) return super.checkList();
-		else {
-			System.out.println("Quantidade de Comissarios insuficiente");
-			return 1;
-		}
+	public boolean checkList() {
+		if (this.quantComissarios() < 3) return false;
+		else return super.checkList();
 	}
-	
-
-	public String servirRefeicao() {
-		String s = "A refeição foi servida";
-		return s;
-	}
-
 }

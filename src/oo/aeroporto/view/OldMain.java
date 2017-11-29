@@ -24,11 +24,11 @@ public class OldMain {
 		main.clickCadastroPilotoEmCompanhia(companhia, piloto);
 		main.clickCadastroPilotoEmCompanhia(companhia, piloto);*/
 		TorreControleInterface torre = new TorreDeControle(4, 5);
-		try {
-			torre.taxi(null);
-		}catch (TorreControleException e){
-			System.err.println("Erro ao realizar o Taxi do avião, motivo: "+e.getMessage());
-		}
+		//try {
+		//	torre.taxi(null);
+		//}catch (TorreControleException e){
+		//	System.err.println("Erro ao realizar o Taxi do avião, motivo: "+e.getMessage());
+		//}
 	}
 	
 	

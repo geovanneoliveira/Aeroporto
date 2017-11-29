@@ -7,9 +7,6 @@ import oo.aeroporto.aviao.interf.AviaoInterface;
 import oo.aeroporto.controle.interf.ViagemInterface;
 import oo.aeroporto.pessoa.interf.ComissarioInterface;
 import oo.aeroporto.pessoa.interf.PilotoInterface;
-import oo.aeroporto.repositorio.RepAviao;
-import oo.aeroporto.repositorio.interf.RepAviaoInterf;
-
 
 
 public abstract class Aviao implements AviaoInterface{
@@ -22,10 +19,9 @@ public abstract class Aviao implements AviaoInterface{
 	private PilotoInterface coPiloto;
 	private ViagemInterface viagem;
 	private ArrayList<ComissarioInterface> comissario = new ArrayList<ComissarioInterface>();
-	private RepAviaoInterf repAviao;
 	
 	//Constructor
-	public Aviao(int cod, int capacidade) throws AviaoException {
+	public Aviao(int cod, int capacidade){
 		this.cod = cod;
 		this.capacidade = capacidade;
 		this.piloto = null;
@@ -33,16 +29,19 @@ public abstract class Aviao implements AviaoInterface{
 		this.viagem = null;
 		this.comissario = null;
 		this.status = 0;
-		
-		repAviao = RepAviao.getInstance();
-		repAviao.adicionar(this);
 	}
 			
 	
 	//Method
 	
 	public String listarInformacoes() {
-		return null;
+		String s = "\nCódigo do Avião: "+ getCod() + "\nCapacidade: "+ getCapacidade();
+		if(getPiloto() != null) s+= "\nPiloto: "+getPiloto().getNome();
+		if(getCoPiloto() != null) s+= "\nCo-Piloto: "+ getCoPiloto().getNome(); 
+		if(getViagem() != null) s+="\nViagem do Avião: "+ getViagem().getCod();
+		if(getComissario() != null) s+="\nComissários:" + quantComissarios();
+		s += "\nSatus do Avião: "+ getStatus();
+		return s;
 	}
 	
 	
@@ -51,16 +50,16 @@ public abstract class Aviao implements AviaoInterface{
 		return s;
 	}
 
-	public void adicionarPiloto(PilotoInterface piloto) {
-		if(piloto.getBreve() > -1) {
-			this.piloto = piloto;
-		}
+	public void adicionarPiloto(PilotoInterface piloto) throws AviaoException{
+		if (piloto == null) throw new AviaoException ("Piloto Inválido");
+		else if (piloto.getBreve() == -1) throw new AviaoException("Piloto com breve incorreto");
+		else this.piloto = piloto;
 	}
 
-	public void adicionarCoPiloto(PilotoInterface coPiloto) {
-		if(piloto.getBreve() > -1) {
-			this.coPiloto = coPiloto;
-		}		
+	public void adicionarCoPiloto(PilotoInterface coPiloto) throws AviaoException{
+		if (coPiloto == null) throw new AviaoException ("Co-Piloto Inválido");
+		else if (coPiloto.getBreve() == -1) throw new AviaoException("Co-Piloto com Brevê incorreto");
+		else this.coPiloto = coPiloto;
 	}
 
 	public void adicionarViagem(ViagemInterface viagem) {
@@ -101,13 +100,13 @@ public abstract class Aviao implements AviaoInterface{
 		return comissario;
 	}
 
-	public int checkList(){
+	public boolean checkList(){
 		if(this.piloto != null)
 			if(this.coPiloto != null)
 				if(this.comissario.size() > 0)
-					if(viagem != null) return 0;
+					if(viagem != null) return true;
 				
-		return 1;		
+		return false;		
 			
 	}
 

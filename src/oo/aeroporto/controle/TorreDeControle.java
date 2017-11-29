@@ -8,13 +8,13 @@ public class TorreDeControle implements TorreControleInterface{
 
 	//Attributes
 	private int cod;
-	private int quatidadeDePistas;
+	private int quantidadeDePistas;
 	private int counter = 0;
 	
 	//Constructor
 	public TorreDeControle(int cod, int quantidadeDePistas) {
 		this.cod = cod;
-		this.quatidadeDePistas = quantidadeDePistas;
+		this.quantidadeDePistas = quantidadeDePistas;
 	}
 
 	//Setters e Getters
@@ -22,12 +22,12 @@ public class TorreDeControle implements TorreControleInterface{
 		return cod;
 	}
 
-	public int getQuatidadeDePistas() {
-		return quatidadeDePistas;
+	public int getQuantidadeDePistas() {
+		return quantidadeDePistas;
 	}
 
-	public void setQuatidadeDePistas(int quatidadeDePistas) {
-		this.quatidadeDePistas = quatidadeDePistas;
+	public void setQuantidadeDePistas(int quantidadeDePistas) {
+		this.quantidadeDePistas = quantidadeDePistas;
 	}
 	
 	//Methods
@@ -35,38 +35,42 @@ public class TorreDeControle implements TorreControleInterface{
 	@Override
 	public String status() {
 		String msg = ("Cód da Torre: "+this.cod);
-		msg += ("\nQuantidade de Pistas: "+this.quatidadeDePistas);
+		msg += ("\nQuantidade de Pistas: "+this.quantidadeDePistas);
 		msg += ("\nQuantidade de Pistas atualmente ocupadas: "+this.counter);
 		return msg;
 	}
 
-	@Override
-	public boolean taxi(AviaoInterface aviao) throws TorreControleException{
+
+	private void taxi(AviaoInterface aviao) throws TorreControleException{
 		if (aviao == null) throw new TorreControleException("Falta Aviao");
-		if (aviao.checkList() == 1) 
-			return false;
-		if (this.counter < this.quatidadeDePistas) {
+		else if (aviao.checkList() == false) throw new TorreControleException("Checklist Incompleto");
+		else if (aviao.getStatus() == 1) throw new TorreControleException("O avião já está na pista");
+		else if (this.counter >= this.quantidadeDePistas) throw new TorreControleException("As pistas estão lotadas");
+		else {
 			this.counter++;
-			return true;
+			aviao.setStatus(1);
 		}
-		return false;
 	}
 
 	@Override
 	public void decolar(AviaoInterface aviao) throws TorreControleException{
-		if (this.taxi(aviao) == true) {
+		try {
+			this.taxi(aviao);
 			this.counter--;
-			aviao.setStatus(2);	//analisar o que é isso
+			aviao.setStatus(2);
+		}catch(TorreControleException e) {
+			throw new TorreControleException("Avião com o taxi negado\nMotivo: "+e.getMessage());
 		}
-		else throw new TorreControleException("Avião com o cheklist ainda incompleto");
 	}
 
 	@Override
 	public void aterrissar(AviaoInterface aviao) throws TorreControleException{
-		if (this.taxi(aviao) == true) {
-			aviao.setStatus(0);
+		try {
+			this.taxi(aviao);
 			this.counter--;
+			aviao.setStatus(0);
+		}catch (TorreControleException e){
+			throw new TorreControleException("Avião com o taxi negado\nMotivo: "+e.getMessage());
 		}
-		else throw new TorreControleException("Avião com o cheklist ainda incompleto");
 	}
 }

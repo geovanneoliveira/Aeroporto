@@ -133,7 +133,9 @@ public class Companhia  implements CompanhiaInterface {
 
 	@Override
 	public void removerPiloto(PilotoInterface piloto) throws PilotoException {
-		this.piloto.remove(piloto);
+		if (piloto == null) throw new PilotoException("Piloto inválido");
+		else if (this.buscarPiloto(piloto.getBreve()) == null) throw new PilotoException("Esse piloto não existe nessa companhia");
+		else this.piloto.remove(piloto);
 	}
 
 	@Override
@@ -150,12 +152,16 @@ public class Companhia  implements CompanhiaInterface {
 
 	@Override
 	public void inserirComissario(ComissarioInterface comissario) throws ComissarioException {
-		this.comissario.add(comissario);
+		if (comissario == null) throw new ComissarioException("Comissário Inválido");
+		else if (this.buscarComissario(comissario.getANAC()) != null) throw new ComissarioException("Esse comissário já pertence a companhia");
+		else this.comissario.add(comissario);
 	}
 
 	@Override
 	public void removerComissario(ComissarioInterface comissario) throws ComissarioException {
-		this.comissario.remove(comissario);
+		if (comissario == null) throw new ComissarioException("Comissário Inválido");
+		else if (this.buscarComissario(comissario.getANAC()) == null) throw new ComissarioException("Esse Comissário não existe nessa companhia");
+		else this.comissario.remove(comissario);
 	}
 
 	@Override
@@ -174,12 +180,16 @@ public class Companhia  implements CompanhiaInterface {
 
 	@Override
 	public void inserirAviao(AviaoInterface aviao) throws AviaoException {
-		this.aviao.add(aviao);
+		if (aviao == null) throw new AviaoException("Avião Inválido");
+		else if (this.buscarAviao(aviao.getCod()) != null) throw new AviaoException("O Avião já existe nessa Companhia");
+		else this.aviao.add(aviao);
 	}
 
 	@Override
 	public void removerAviao(AviaoInterface aviao) throws AviaoException {
-		this.aviao.remove(aviao);
+		if (aviao == null) throw new AviaoException("Avião Inválido");
+		else if (this.buscarAviao(aviao.getCod()) == null) throw new AviaoException("Esse avião não existe nessa companhia");
+		else this.aviao.remove(aviao);
 	}
 
 	@Override
@@ -197,13 +207,16 @@ public class Companhia  implements CompanhiaInterface {
 
 	@Override
 	public void inserirViagem(ViagemInterface viagem) throws ViagemException {
-		this.viagem.add(viagem);
+		if (viagem == null) throw new ViagemException("Viagem inválida");
+		else if (this.buscarViagem(viagem.getCod()) != null) throw new ViagemException("Essa viagem já está adicionada nessa companhia");
+		else this.viagem.add(viagem);
 	}
 
 	@Override
 	public void removerViagem(ViagemInterface viagem) throws ViagemException {
-		this.viagem.remove(viagem);
-		
+		if (viagem == null) throw new ViagemException("Viagem Inválida");
+		else if (this.buscarViagem(viagem.getCod()) == null) throw new ViagemException("Essa viagem não existe nessa companhia");
+		else this.viagem.remove(viagem);	
 	}
 
 	@Override
