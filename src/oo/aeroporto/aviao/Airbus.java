@@ -27,7 +27,7 @@ public class Airbus extends Aviao implements AviaoInterface{
 	
 	@Override
 	public boolean checkList() {
-		if (this.quantComissarios() < 3) return false;
+		if (this.quantComissarios() < 1) return false;
 		else return super.checkList();
 	}
 }

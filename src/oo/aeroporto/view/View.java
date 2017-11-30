@@ -24,8 +24,7 @@ public class View {
 		
 		Fachada f = new Fachada(2);
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy hh:mm");
-		Date date1 = null;
-		Date date2= null;
+
 		
 		CompanhiaInterface companhia = null;
 		PilotoInterface piloto = null;
@@ -70,12 +69,12 @@ public class View {
 		}
 		
 		
-		try {
+		/*try {
 			piloto = f.clickRemoverPiloto(companhia, piloto);
 			System.out.println("Piloto Removido Com sucesso!");
 		} catch (PilotoException | CompanhiaException ce) {
 			System.err.println("Erro ao Remover Piloto, motivo: " + ce.getMessage());
-		}
+		}*/
 		
 		
 		//COMISSARIO
@@ -86,19 +85,16 @@ public class View {
 			System.err.println("Erro ao cadastrar comissario, motivo: " + coe.getMessage());	
 		}
 		
-		try {
+		/*try {
 			comissario = f.clickRemoverComissario(companhia, comissario);
 			System.out.println("Comissario Removido Com sucesso!");
 		} catch (ComissarioException | CompanhiaException ce){
 			System.err.println("Erro ao Remover comissario, motivo: " + ce.getMessage());
-		}
+		}*/
 		
 		
 		// VIAGEM
 		
-		date1 = (Date) formatter.parse("01/01/2017 13:54");
-		date2 = (Date) formatter.parse("01/01/2017 18:50");
-	
 		
 		try {
 			viagem = f.cadastrarViagem(companhia, 1, "REC", "GAO", (Date) formatter.parse("01/01/2017 13:54"), (Date) formatter.parse("01/01/2017 18:50"), 12);
@@ -125,12 +121,12 @@ public class View {
 		}
 		
 		
-		try {
+		/*try {
 			passageiro = f.clickRemoverPassageiro(viagem, passageiro);
 			System.out.println("Passageiro Removido Com sucesso!");
 		} catch (PassageiroException | ViagemException pe){
 			System.err.println("Erro ao Remover Passageiro, motivo: " + pe.getMessage());
-		}
+		}*/
 		
 		
 
@@ -144,14 +140,27 @@ public class View {
 			System.err.println("Erro ao cadastrar aviao, motivo: " + ae.getMessage());
 		}
 		
-		try {
+		/*try {
 			aviao = f.removerAviao(companhia, aviao);
 			System.out.println("Aviao Removido Com sucesso!");
 		} catch (AviaoException| CompanhiaException ae) {
 			System.err.println("Erro ao Remover aviao, motivo: " + ae.getMessage());
+		}*/
+		
+		System.out.println(companhia.listarInformacoes());
+		
+		
+		System.out.println(comissario.getANAC());
+		try {
+			aviao.adicionarViagem(viagem);
+			aviao.adicionarComissario(comissario);
+			aviao.adicionarPiloto(piloto);
+			aviao.adicionarCoPiloto(piloto);
+			f.clickDecolarAviao(aviao);
+		} catch (AviaoException | TorreControleException e) {
+			System.err.println("Erro ao decolar aviao, motivo: " + e.getMessage());
+
 		}
-		
-		
 	}
 
 }

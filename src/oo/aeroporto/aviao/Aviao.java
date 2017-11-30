@@ -24,10 +24,6 @@ public abstract class Aviao implements AviaoInterface{
 	public Aviao(int cod, int capacidade){
 		this.cod = cod;
 		this.capacidade = capacidade;
-		this.piloto = null;
-		this.coPiloto = null;
-		this.viagem = null;
-		this.comissario = null;
 		this.status = 0;
 	}
 			
