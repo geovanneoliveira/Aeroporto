@@ -57,26 +57,14 @@ public class Fachada {
 	}
 	//COMPANHIA
 	
-	public CompanhiaInterface clickCadastrarCompanhia(int id, String nome) {
+	public CompanhiaInterface clickCadastrarCompanhia(int id, String nome) throws CompanhiaException {
 		CompanhiaInterface companhia = null;
-		try {
 		companhia = negocio.CadastrarCompanhia(id, nome);
-		System.out.println("Companhia cadastrada com sucesso!");
 		return companhia;
-		
-		} catch (CompanhiaException ce) {
-			System.err.println("Erro ao cadastrar companhia, motivo: " + ce.getMessage());
-			return null;
-		}
 	}
 	
-	public void clickRemoverCompanhia(CompanhiaInterface companhia) {
-		try {
+	public void clickRemoverCompanhia(CompanhiaInterface companhia) throws CompanhiaException {
 			negocio.RemoverCompanhia(companhia);
-			System.out.println("Companhia Removida Com sucesso!");
-		} catch (CompanhiaException ce){
-			System.err.println("Erro ao Remover companhia, motivo: " + ce.getMessage());
-		}
 	}
 	
 	
@@ -107,31 +95,16 @@ public class Fachada {
 	
 	//PILOTO
 	
-	public PilotoInterface clickCadastrarPiloto(CompanhiaInterface companhia, String CPF, String nome, int idade, String telefoneProprio, String CTPS, int breve, double horasDeVoo) {
+	public PilotoInterface clickCadastrarPiloto(CompanhiaInterface companhia, String CPF, String nome, int idade, String telefoneProprio, String CTPS, int breve, double horasDeVoo) throws PilotoException, CompanhiaException {
 		PilotoInterface piloto = null;
-		try {
 		piloto = negocio.CadastrarPiloto(companhia, CPF, nome, idade, telefoneProprio, CTPS, breve, horasDeVoo);
-		System.out.println("Piloto cadastrado com sucesso!");
 		return piloto;
-		
-		} catch (PilotoException pe) {
-			System.err.println("Erro ao cadastrar piloto, motivo: " + pe.getMessage());
-			return null;
-		}catch (CompanhiaException ce) {
-			System.err.println("Erro ao cadastrar piloto, motivo: " + ce.getMessage());
-			return null;
-		}
+
 	}
 	
-	public void clickRemoverPiloto(CompanhiaInterface companhia, PilotoInterface piloto) {
-		try {
+	public void clickRemoverPiloto(CompanhiaInterface companhia, PilotoInterface piloto) throws PilotoException, CompanhiaException {
 			negocio.RemoverPiloto(companhia, piloto);
-			System.out.println("Piloto Removido Com sucesso!");
-		} catch (PilotoException pe){
-			System.err.println("Erro ao Remover Piloto, motivo: " + pe.getMessage());
-		} catch (CompanhiaException ce) {
-			System.err.println("Erro ao Remover Piloto, motivo: " + ce.getMessage());
-		}
+		
 	}
 	
 	public PilotoInterface clickBuscarPiloto(CompanhiaInterface companhia, int cod) {
@@ -148,30 +121,16 @@ public class Fachada {
 	
 	//COMISSARIO
 	
-	public ComissarioInterface clickCadastrarComissario(CompanhiaInterface companhia, String CPF, String nome, int idade, String telefoneProprio, String CTPS,int ANAC) throws PilotoException {
+	public ComissarioInterface clickCadastrarComissario(CompanhiaInterface companhia, String CPF, String nome, int idade, String telefoneProprio, String CTPS,int ANAC) throws ComissarioException, CompanhiaException {
 		ComissarioInterface comissario = null;
-		try {
 		comissario = negocio.cadastrarComissrio(companhia, CPF, nome, idade, telefoneProprio, CTPS, ANAC);
-		System.out.println("Comissario cadastrado com sucesso!");
 		return comissario;
 		
-		} catch (ComissarioException ce) {
-			System.err.println("Erro ao cadastrar comissario, motivo: " + ce.getMessage());
-			return null;
-		} catch (CompanhiaException coe) {
-			System.err.println("Erro ao cadastrar comissario, motivo: " + coe.getMessage());
-			return null;
-
-		}
 	}
 	
-	public void clickRemoverComissario(ComissarioInterface comissario) {
-		try {
+	public void clickRemoverComissario(ComissarioInterface comissario) throws ComissarioException {
 			negocio.removerComissario(comissario);
-			System.out.println("Comissario Removido Com sucesso!");
-		} catch (ComissarioException ce){
-			System.err.println("Erro ao Remover comissario, motivo: " + ce.getMessage());
-		}
+		
 	}
 	
 	public ComissarioInterface clickBuscarComissario(int cod) {
@@ -188,26 +147,16 @@ public class Fachada {
 	
 	//PASSAGEIRO
 	
-	public PassageiroInterface cadastrarPassageiro(String CPF, String nome, int idade, String telefoneProprio, String telefoneDeEmergencia) {
-		PassageiroInterface passageiro = null;
-		try {
+	public PassageiroInterface cadastrarPassageiro(String CPF, String nome, int idade, String telefoneProprio, String telefoneDeEmergencia) throws PassageiroException {
+			PassageiroInterface passageiro = null;
 			passageiro = negocio.cadastrarPassageiro(CPF, nome, idade, telefoneProprio, telefoneDeEmergencia);
-			System.out.println("Comissario cadastrado com sucesso!");
 			return passageiro;
-		} catch (PassageiroException pe) {
-			System.err.println("Erro ao cadastrar passageiro, motivo: " + pe.getMessage());
-			return passageiro;
-
-		}
+		
 	}
 	
-	public void clickRemoverPassageiro(PassageiroInterface passageiro) {
-		try {
+	public void clickRemoverPassageiro(PassageiroInterface passageiro) throws PassageiroException {
 			negocio.removerPassageiro(passageiro);
-			System.out.println("Passageiro Removido Com sucesso!");
-		} catch (PassageiroException pe){
-			System.err.println("Erro ao Remover Passageiro, motivo: " + pe.getMessage());
-		}
+			
 	}
 	
 	public PassageiroInterface clickBuscarPassageiroPorCod(String cod) {
@@ -236,26 +185,17 @@ public class Fachada {
 	
 	
 	// VIAGEM
-	public ViagemInterface cadastrarViagem(int cod, String aeroportoOrigem, String aeroportoDestino, Date dataHoraDeEmbarque, Date dataHoraDeDesembarque,int vagasDisponiveis) {
+	public ViagemInterface cadastrarViagem(int cod, String aeroportoOrigem, String aeroportoDestino, Date dataHoraDeEmbarque, Date dataHoraDeDesembarque,int vagasDisponiveis) throws ViagemException {
 		ViagemInterface viagem = null;
-		try {
 			viagem = negocio.cadastrarViagem(cod, aeroportoOrigem, aeroportoDestino, dataHoraDeEmbarque, dataHoraDeDesembarque, vagasDisponiveis);
-			System.out.println("Viagem cadastrada com sucesso!");
 			return viagem;
-		} catch (ViagemException ve) {
-			System.err.println("Erro ao cadastrar viagem, motivo: " + ve.getMessage());
-			return viagem;
-		}
+
 		
 	}
 	
-	public void removerViagem(ViagemInterface viagem){
-		try {
+	public void removerViagem(ViagemInterface viagem) throws ViagemException{
 			negocio.removerViagem(viagem);
-			System.out.println("Viagem Removido Com sucesso!");
-		} catch (ViagemException ve) {
-			System.err.println("Erro ao Remover comissario, motivo: " + ve.getMessage());
-		}
+		
 	}
 	
 	public ViagemInterface buscarViagem(int cod) {
