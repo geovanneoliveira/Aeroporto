@@ -174,7 +174,7 @@ public class Negocio implements NegocioInterf{
 	// VIAGEM
 	
 	public ViagemInterface cadastrarViagem(CompanhiaInterface companhia, int cod, String aeroportoOrigem, String aeroportoDestino, Date dataHoraDeEmbarque, Date dataHoraDeDesembarque,int vagasDisponiveis) throws ViagemException, CompanhiaException {
-		if(companhia == null) throw new CompanhiaException("Companhia Inválida");
+		if(companhia == null) throw new CompanhiaException("Companhia Invalida");
 		
 		ViagemInterface viagem = new Viagem(cod, aeroportoOrigem, aeroportoDestino, dataHoraDeEmbarque, dataHoraDeDesembarque, vagasDisponiveis);
 		companhia.inserirViagem(viagem);

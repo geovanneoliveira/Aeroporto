@@ -108,12 +108,12 @@ public class View {
 		}
 		
 		
-		try {
+		/*try {
 			viagem = f.removerViagem(companhia, viagem);
 			System.out.println("Viagem Removido Com sucesso!");
 		} catch (ViagemException | CompanhiaException ve) {
 			System.err.println("Erro ao Remover comissario, motivo: " + ve.getMessage());
-		}
+		}*/
 		
 		//PASSAGEIRO
 		

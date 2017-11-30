@@ -27,7 +27,7 @@ public class Passageiro extends Pessoa implements PassageiroInterface {
 
 	@Override
 	public String getCPF() {
-		return this.getCPF();
+		return super.listarIdentificador();
 	}
 			
 }
