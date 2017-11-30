@@ -120,41 +120,45 @@ public class Negocio implements NegocioInterf{
 		return comissario;
 	}
 	
-	public void removerComissario(ComissarioInterface comissario) throws ComissarioException {
+	public void removerComissario(CompanhiaInterface companhia, ComissarioInterface comissario) throws ComissarioException, CompanhiaException {
+		if(companhia == null) throw new CompanhiaException("Companhia Inválida");
+		companhia.removerComissario(comissario);
 		repositorioComissario.deletar(comissario);
 		comissario = null;
 	}
 	
-	public ComissarioInterface buscarComissario(int cod) {
-		ComissarioInterface comissario = null;
-		comissario = repositorioComissario.buscarPorCod(cod);
+	public ComissarioInterface buscarComissario(CompanhiaInterface companhia, int cod) throws CompanhiaException {
+		if(companhia == null) throw new CompanhiaException("Companhia Inválida");
 		
-		if(comissario == null) {
-			return comissario;
-		}
+		ComissarioInterface comissario = null;
+		comissario = companhia.buscarComissario(cod);
 		return comissario;
 	}
 	
 	// PASSAGEIRO
 	
-	public PassageiroInterface cadastrarPassageiro(String CPF, String nome, int idade, String telefoneProprio, String telefoneDeEmergencia) throws PassageiroException {
+	public PassageiroInterface cadastrarPassageiro(ViagemInterface v,String CPF, String nome, int idade, String telefoneProprio, String telefoneDeEmergencia) throws PassageiroException, ViagemException {
+		if(v == null) throw new ViagemException("Viagem Invalida");
+		
 		PassageiroInterface passageiro = new Passageiro(CPF, nome, idade, telefoneProprio, telefoneDeEmergencia);
+		v.adicionarPassageiro(passageiro);
 		repositorioPassageiro.adicionar(passageiro);
 		return passageiro;
 	}
 	
-	public void removerPassageiro(PassageiroInterface passageiro) throws PassageiroException {
+	public void removerPassageiro(ViagemInterface v, PassageiroInterface passageiro) throws PassageiroException, ViagemException {
+		if(v == null) throw new ViagemException("Viagem Invalida");
+		
 		repositorioPassageiro.deletar(passageiro);
+		v.retirarPassageiro(passageiro);
 		passageiro = null;
 	}
 	
-	public PassageiroInterface buscarPassageiroCod(String cod) {
+	public PassageiroInterface buscarPassageiroCod(ViagemInterface v, String CPF) throws ViagemException {
+		if(v == null) throw new ViagemException("Viagem Invalida");
 		PassageiroInterface passageiro = null;
-		passageiro = repositorioPassageiro.buscarPorCod(cod);
-		
-		if(passageiro == null) {
-			return passageiro;
-		}
+		passageiro = v.buscarPassageiro(CPF);
+
 		return passageiro;
 	}
 	
@@ -170,55 +174,70 @@ public class Negocio implements NegocioInterf{
 	
 	// VIAGEM
 	
-	public ViagemInterface cadastrarViagem(int cod, String aeroportoOrigem, String aeroportoDestino, Date dataHoraDeEmbarque, Date dataHoraDeDesembarque,int vagasDisponiveis) throws ViagemException {
+	public ViagemInterface cadastrarViagem(CompanhiaInterface companhia, int cod, String aeroportoOrigem, String aeroportoDestino, Date dataHoraDeEmbarque, Date dataHoraDeDesembarque,int vagasDisponiveis) throws ViagemException, CompanhiaException {
+		if(companhia == null) throw new CompanhiaException("Companhia Inválida");
+		
 		ViagemInterface viagem = new Viagem(cod, aeroportoOrigem, aeroportoDestino, dataHoraDeEmbarque, dataHoraDeDesembarque, vagasDisponiveis);
+		companhia.inserirViagem(viagem);
 		repositorioViagem.adicionar(viagem);
 		return viagem;
 	}
 	
-	public void removerViagem(ViagemInterface viagem) throws ViagemException {
+	public void removerViagem(CompanhiaInterface companhia, ViagemInterface viagem) throws ViagemException, CompanhiaException {
+		if(companhia == null) throw new CompanhiaException("Companhia Inválida");
+		
+		
 		repositorioViagem.deletar(viagem);
+		companhia.removerViagem(viagem);
+		viagem = null;
 		viagem = null;
 	}
 	
-	public ViagemInterface buscarViagem(int cod) {
-		ViagemInterface viagem = null;
-		viagem = repositorioViagem.buscarPorCod(cod);
+	public ViagemInterface buscarViagem(CompanhiaInterface companhia,int cod) throws CompanhiaException {
+		if(companhia == null) throw new CompanhiaException("Companhia Inválida");
 		
-		if(viagem == null) {
-			return viagem;
-		}
+		ViagemInterface viagem = null;
+		viagem = companhia.buscarViagem(cod);
+		
 		return viagem;	
 		
 	}
 	
 	// AVIAO
 	
-	public AviaoInterface cadastrarAviao(int cod, int capacidade, String modelo) throws AviaoException {
+	public AviaoInterface cadastrarAviao(CompanhiaInterface companhia, int cod, int capacidade, String modelo) throws AviaoException, CompanhiaException {
+		if(companhia == null) throw new CompanhiaException("Companhia Inválida");
+		
+		AviaoInterface aviao =null;
 		if(modelo.equals("airbus")) {
-			AviaoInterface aviao = new Airbus(cod,capacidade);
+			aviao = new Airbus(cod,capacidade);
 			repositorioAviao.adicionar(aviao);
+			companhia.inserirAviao(aviao);
 			return aviao;
-		}else if(modelo.equals("boeing")) {
-			AviaoInterface aviao = new Airbus(cod,capacidade);
+		}else if(modelo.equals("boeing")) {		//lebrando que so podem ser desse 2 tipos;
+			aviao = new Airbus(cod,capacidade);
 			repositorioAviao.adicionar(aviao);
+			companhia.inserirAviao(aviao);
 			return aviao;
 		}
+		if(aviao == null) throw new AviaoException("Aviao tem que ser airbus ou boenig");
 		return null;
 	}
 	
-	public void removerAviao(AviaoInterface aviao) throws AviaoException {
+	public void removerAviao(CompanhiaInterface companhia, AviaoInterface aviao) throws AviaoException, CompanhiaException {
+		if(companhia == null) throw new CompanhiaException("Companhia Inválida");
+		
 		repositorioAviao.deletar(aviao);
+		companhia.removerAviao(aviao);
 		aviao = null;
 	}
 	
-	public AviaoInterface buscarAviao(int cod) {
-		AviaoInterface aviao = null;
-		aviao = repositorioAviao.buscarPorCod(cod);
+	public AviaoInterface buscarAviao(CompanhiaInterface companhia, int cod) throws CompanhiaException {
+		if(companhia == null) throw new CompanhiaException("Companhia Inválida");
 		
-		if(aviao == null) {
-			return aviao;
-		}
+		AviaoInterface aviao = null;
+		aviao = companhia.buscarAviao(cod);
+		
 		return aviao;	
 	}
 	

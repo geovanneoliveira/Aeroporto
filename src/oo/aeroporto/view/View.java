@@ -6,10 +6,11 @@ import oo.aeroporto.controle.exceptions.CompanhiaException;
 import oo.aeroporto.controle.exceptions.TorreControleException;
 import oo.aeroporto.controle.exceptions.ViagemException;
 import oo.aeroporto.controle.interf.CompanhiaInterface;
+import oo.aeroporto.controle.interf.ViagemInterface;
 import oo.aeroporto.pessoa.exceptions.ComissarioException;
 import oo.aeroporto.pessoa.exceptions.PassageiroException;
 import oo.aeroporto.pessoa.exceptions.PilotoException;
-import oo.aeroporto.pessoa.interf.PilotoInterface;
+import oo.aeroporto.pessoa.interf.*;
 
 public class View {
 
@@ -22,10 +23,16 @@ public class View {
 		
 		CompanhiaInterface companhia = null;
 		PilotoInterface piloto = null;
+		AviaoInterface aviao = null;
+		PassageiroInterface passageiro = null;
+		ComissarioInterface comissario = null;
+		ViagemInterface viagem = null;
+		
+		//NOSSO CODIGO ESTAVA ASSIM
 		//PilotoInterface p = f.clickCadastrarPiloto(c, "456", "tho", 45, "4654684", "5646", 120, 120);
 		//f.clickCadastrarPiloto(b, "456", "tho", 45, "4654684", "5646", 12, 120);
 		//f.clickRemoverPiloto(b, p);
-		AviaoInterface a = f.cadastraAviao(5, 10, "airbus");
+		//AviaoInterface a = f.cadastraAviao(5, 10, "airbus");
 		//f.clickDecolarAviao(a);
 		
 		
@@ -50,7 +57,7 @@ public class View {
 		//PILOTO
 		
 		try {
-			piloto = f.clickCadastrarPiloto(companhia, CPF, nome, idade, telefoneProprio, CTPS, breve, horasDeVoo);
+			piloto = f.clickCadastrarPiloto(companhia, "123", "JORGE", 30, "998765432", "321", 100, 1500);
 			System.out.println("Piloto cadastrado com sucesso!");
 		} catch (PilotoException | CompanhiaException ce) {
 			System.err.println("Erro ao cadastrar piloto, motivo: " + ce.getMessage());
@@ -67,16 +74,16 @@ public class View {
 		
 		//COMISSARIO
 		try {
-			f.clickCadastrarComissario(companhia, CPF, nome, idade, telefoneProprio, CTPS, ANAC);
+			f.clickCadastrarComissario(companhia, "1234", "CARVALHO", 40, "956783452", "4321", 500);
 			System.out.println("Comissario cadastrado com sucesso!");
 		} catch (ComissarioException | CompanhiaException coe) {
 			System.err.println("Erro ao cadastrar comissario, motivo: " + coe.getMessage());	
 		}
 		
 		try {
-			f.clickRemoverComissario(comissario);
+			f.clickRemoverComissario(companhia, comissario);
 			System.out.println("Comissario Removido Com sucesso!");
-		} catch (ComissarioException ce){
+		} catch (ComissarioException | CompanhiaException ce){
 			System.err.println("Erro ao Remover comissario, motivo: " + ce.getMessage());
 		}
 		
@@ -85,17 +92,17 @@ public class View {
 		//PASSAGEIRO
 		
 		try {
-			f.cadastrarPassageiro(CPF, nome, idade, telefoneProprio, telefoneDeEmergencia);
+			passageiro = f.cadastrarPassageiro(viagem, "12345", "ROMULO", 29, "987654233", "912345123");
 			System.out.println("Comissario cadastrado com sucesso!");
-		} catch (PassageiroException pe) {
+		} catch (PassageiroException | ViagemException pe) {
 			System.err.println("Erro ao cadastrar passageiro, motivo: " + pe.getMessage());
 		}
 		
 		
 		try {
-			f.clickRemoverPassageiro(passageiro);
+			f.clickRemoverPassageiro(viagem, passageiro);
 			System.out.println("Passageiro Removido Com sucesso!");
-		} catch (PassageiroException pe){
+		} catch (PassageiroException | ViagemException pe){
 			System.err.println("Erro ao Remover Passageiro, motivo: " + pe.getMessage());
 		}
 		
@@ -103,29 +110,23 @@ public class View {
 		// VIAGEM
 		
 		try {
-			f.cadastrarViagem(cod, aeroportoOrigem, aeroportoDestino, dataHoraDeEmbarque, dataHoraDeDesembarque, vagasDisponiveis)
+			viagem = f.cadastrarViagem(companhia, "1", "REC", "GAO", dataHoraDeEmbarque, dataHoraDeDesembarque, 12);
 			System.out.println("Viagem cadastrada com sucesso!");
-		} catch (ViagemException ve) {
+		} catch (ViagemException | CompanhiaException ve) {
 			System.err.println("Erro ao cadastrar viagem, motivo: " + ve.getMessage());
 		}
 		
 		
 		try {
-			f.removerViagem(viagem);
+			f.removerViagem(companhia, viagem);
 			System.out.println("Viagem Removido Com sucesso!");
-		} catch (ViagemException ve) {
+		} catch (ViagemException | CompanhiaException ve) {
 			System.err.println("Erro ao Remover comissario, motivo: " + ve.getMessage());
 		}
 		
+		//AVIAO
 		
-		
-		
-		
-		
-		
-		
-		
-		
+		try {
 		
 		
 		
@@ -136,7 +137,7 @@ public class View {
 			f.clickPousarAviao(a);
 			System.out.println("Pouso realizado com sucesso!");
 		} catch (AviaoException | TorreControleException e) {
-			System.err.print("N„o foi possÌvel pousar o avi„o. Motivo: "+e.getMessage());
+			System.err.print("N√£o foi poss√≠vel pousar o avi√£o. Motivo: "+e.getMessage());
 		}
 	}
 

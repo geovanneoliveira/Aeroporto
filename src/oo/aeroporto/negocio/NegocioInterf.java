@@ -42,32 +42,32 @@ public interface NegocioInterf {
 	// COMISSARIO
 	public ComissarioInterface cadastrarComissrio(CompanhiaInterface companhia, String CPF, String nome, int idade, String telefoneProprio, String CTPS, int ANAC) throws ComissarioException, CompanhiaException;
 	
-	public void removerComissario(ComissarioInterface comissario) throws ComissarioException;
+	public void removerComissario(CompanhiaInterface companhia, ComissarioInterface comissario) throws ComissarioException, CompanhiaException;
 	
-	public ComissarioInterface buscarComissario(int cod);
+	public ComissarioInterface buscarComissario(CompanhiaInterface companhia, int cod) throws CompanhiaException;
 	
 	// PASSAGEIRO
-	public PassageiroInterface cadastrarPassageiro(String CPF, String nome, int idade, String telefoneProprio, String telefoneDeEmergencia) throws PassageiroException;
+	public PassageiroInterface cadastrarPassageiro(ViagemInterface v,String CPF, String nome, int idade, String telefoneProprio, String telefoneDeEmergencia) throws PassageiroException, ViagemException;
 	
-	public void removerPassageiro(PassageiroInterface passageiro) throws PassageiroException;
+	public void removerPassageiro(ViagemInterface v, PassageiroInterface passageiro) throws PassageiroException, ViagemException;
 	
-	public PassageiroInterface buscarPassageiroCod(String cod);
+	public PassageiroInterface buscarPassageiroCod(ViagemInterface v, String CPF) throws ViagemException;
 	
 	public PassageiroInterface buscarPassageiroNome(String nome);
 	
 	// VIAGEM
-	public ViagemInterface cadastrarViagem(int cod, String aeroportoOrigem, String aeroportoDestino, Date dataHoraDeEmbarque, Date dataHoraDeDesembarque,int vagasDisponiveis) throws ViagemException;
+	public ViagemInterface cadastrarViagem(CompanhiaInterface companhia, int cod, String aeroportoOrigem, String aeroportoDestino, Date dataHoraDeEmbarque, Date dataHoraDeDesembarque,int vagasDisponiveis) throws ViagemException, CompanhiaException;
 	
-	public void removerViagem(ViagemInterface viagem) throws ViagemException;
+	public void removerViagem(CompanhiaInterface companhia, ViagemInterface viagem) throws ViagemException, CompanhiaException ;
 	
-	public ViagemInterface buscarViagem(int cod);
+	public ViagemInterface buscarViagem(CompanhiaInterface companhia,int cod) throws CompanhiaException;
 	
 	// AVIAO
-	public AviaoInterface cadastrarAviao(int cod, int capacidade, String modelo) throws AviaoException;
+	public AviaoInterface cadastrarAviao(CompanhiaInterface companhia, int cod, int capacidade, String modelo) throws AviaoException, CompanhiaException;
 	
-	public void removerAviao(AviaoInterface aviao) throws AviaoException;
+	public void removerAviao(CompanhiaInterface companhia, AviaoInterface aviao) throws AviaoException, CompanhiaException;
 	
-	public AviaoInterface buscarAviao(int cod);
+	public AviaoInterface buscarAviao(CompanhiaInterface companhia, int cod) throws CompanhiaException;
 	
 	//TORRE CONTROLE
 	public void decolar(AviaoInterface aviao) throws TorreControleException;
