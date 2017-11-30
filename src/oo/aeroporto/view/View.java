@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import oo.aeroporto.aviao.Airbus;
 import oo.aeroporto.aviao.exception.AviaoException;
 import oo.aeroporto.aviao.interf.AviaoInterface;
 import oo.aeroporto.controle.Viagem;
@@ -157,9 +158,18 @@ public class View {
 			aviao.adicionarPiloto(piloto);
 			aviao.adicionarCoPiloto(piloto);
 			f.clickDecolarAviao(aviao);
+			System.out.println("Aviao decolado com sucesso!");
 		} catch (AviaoException | TorreControleException e) {
 			System.err.println("Erro ao decolar aviao, motivo: " + e.getMessage());
 
+		}
+		AviaoInterface a1 = new Airbus(10, 30);
+		a1.setStatus(0);
+		try {
+			f.clickPousarAviao(a1);
+			System.out.println("O Aviao pousou com sucesso");
+		} catch (AviaoException | TorreControleException e) {
+			System.err.println("Erro ao pousar o aviao. Motivo: "+e.getMessage());
 		}
 	}
 

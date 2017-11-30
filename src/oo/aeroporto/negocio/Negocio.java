@@ -263,12 +263,19 @@ public class Negocio implements NegocioInterf{
 
 	@Override
 	public void aterrissar(AviaoInterface aviao) throws TorreControleException{
-		try {
+		if (aviao == null) throw new TorreControleException("Aviao Invalido");
+		else if (aviao.getStatus() != 2) throw new TorreControleException("Aviao nao esta em voo");
+		else if (torreDeControle.getCounter() >= torreDeControle.getQuantidadeDePistas()) throw new TorreControleException("As pistas estão lotadas");
+		else {
+			torreDeControle.setCounter(torreDeControle.getCounter() - 1);
+			aviao.setStatus(0);
+		}
+		/*try {
 			this.taxi(aviao);
 			torreDeControle.setCounter(torreDeControle.getCounter() - 1);
 			aviao.setStatus(0);
 		}catch (TorreControleException e){
 			throw new TorreControleException("Avião com o taxi negado. Motivo: "+e.getMessage());
-		}
+		}*/
 	}
 }
