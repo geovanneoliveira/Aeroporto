@@ -1,6 +1,6 @@
 package oo.aeroporto.negocio;
 
-import java.sql.Date;
+import java.util.Date;
 
 import oo.aeroporto.aviao.exception.AviaoException;
 import oo.aeroporto.aviao.interf.AviaoInterface;

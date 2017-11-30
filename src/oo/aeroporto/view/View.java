@@ -6,6 +6,7 @@ import java.util.Date;
 
 import oo.aeroporto.aviao.exception.AviaoException;
 import oo.aeroporto.aviao.interf.AviaoInterface;
+import oo.aeroporto.controle.Viagem;
 import oo.aeroporto.controle.exceptions.CompanhiaException;
 import oo.aeroporto.controle.exceptions.TorreControleException;
 import oo.aeroporto.controle.exceptions.ViagemException;
@@ -22,7 +23,7 @@ public class View {
 		
 		
 		Fachada f = new Fachada(2);
-		SimpleDateFormat formatter = new SimpleDateFormat("DD/MM/YYYY hh:mm");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy hh:mm");
 		Date date1 = null;
 		Date date2= null;
 		
@@ -51,7 +52,7 @@ public class View {
 		}
 		
 		try {
-			f.clickRemoverCompanhia(companhia);
+			companhia = f.clickRemoverCompanhia(companhia);
 			System.out.println("Companhia Removida Com sucesso!");
 		}  catch (CompanhiaException ce){
 			System.err.println("Erro ao Remover companhia, motivo: " + ce.getMessage());
@@ -98,7 +99,7 @@ public class View {
 		
 		try {
 			passageiro = f.cadastrarPassageiro(viagem, "12345", "ROMULO", 29, "987654233", "912345123");
-			System.out.println("Comissario cadastrado com sucesso!");
+			System.out.println("Passageiro cadastrado com sucesso!");
 		} catch (PassageiroException | ViagemException pe) {
 			System.err.println("Erro ao cadastrar passageiro, motivo: " + pe.getMessage());
 		}
@@ -114,11 +115,12 @@ public class View {
 		
 		// VIAGEM
 		
-		date1 = formatter.parse("01/01/2017 13:54");
-		date2 = formatter.parse("01/01/2017 18:50");
+		date1 = (Date) formatter.parse("01/01/2017 13:54");
+		date2 = (Date) formatter.parse("01/01/2017 18:50");
+	
 		
 		try {
-			viagem = f.cadastrarViagem(companhia, 1, "REC", "GAO", date1, date2, 12);
+			viagem = f.cadastrarViagem(companhia, 1, "REC", "GAO", (Date) formatter.parse("01/01/2017 13:54"), (Date) formatter.parse("01/01/2017 18:50"), 12);
 			System.out.println("Viagem cadastrada com sucesso!");
 		} catch (ViagemException | CompanhiaException ve) {
 			System.err.println("Erro ao cadastrar viagem, motivo: " + ve.getMessage());
@@ -135,7 +137,7 @@ public class View {
 		//AVIAO
 		
 		try {
-			aviao = f.cadastraAviao(companhia, 10, 10, "Airbus");
+			aviao = f.cadastraAviao(companhia, 10, 10, "airbus");
 			System.out.println("Aviao cadastrado com sucesso!");
 		} catch (AviaoException | CompanhiaException ae) {
 			System.err.println("Erro ao cadastrar aviao, motivo: " + ae.getMessage());

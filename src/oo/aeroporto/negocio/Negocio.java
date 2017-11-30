@@ -1,7 +1,7 @@
 package oo.aeroporto.negocio;
 
 
-import java.sql.Date;
+import java.util.Date;
 
 import oo.aeroporto.aviao.Airbus;
 import oo.aeroporto.aviao.Aviao;
@@ -114,22 +114,21 @@ public class Negocio implements NegocioInterf{
 	
 	public ComissarioInterface cadastrarComissrio(CompanhiaInterface companhia, String CPF, String nome, int idade, String telefoneProprio, String CTPS, int ANAC) throws ComissarioException, CompanhiaException {
 		ComissarioInterface comissario = new Comissario(CPF, nome, idade, telefoneProprio, CTPS, ANAC);
-		if(companhia == null) throw new CompanhiaException("Companhia Inválida");
+		if(companhia == null) throw new CompanhiaException("Companhia Invalida");
 		companhia.inserirComissario(comissario);
 		repositorioComissario.adicionar(comissario);
 		return comissario;
 	}
 	
 	public void removerComissario(CompanhiaInterface companhia, ComissarioInterface comissario) throws ComissarioException, CompanhiaException {
-		if(companhia == null) throw new CompanhiaException("Companhia Inválida");
+		if(companhia == null) throw new CompanhiaException("Companhia Invalida");
 		companhia.removerComissario(comissario);
 		repositorioComissario.deletar(comissario);
 		comissario = null;
 	}
 	
 	public ComissarioInterface buscarComissario(CompanhiaInterface companhia, int cod) throws CompanhiaException {
-		if(companhia == null) throw new CompanhiaException("Companhia Inválida");
-		
+		if(companhia == null) throw new CompanhiaException("Companhia Invalida");
 		ComissarioInterface comissario = null;
 		comissario = companhia.buscarComissario(cod);
 		return comissario;
