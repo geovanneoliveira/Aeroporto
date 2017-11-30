@@ -88,7 +88,7 @@ public class Negocio implements NegocioInterf{
 	//PILOTO
 	
 	public PilotoInterface CadastrarPiloto(CompanhiaInterface companhia, String CPF, String nome, int idade, String telefoneProprio, String CTPS, int breve, double horasDeVoo) throws PilotoException, CompanhiaException {
-		if (companhia == null) throw new CompanhiaException("Companhia Inv·lida");
+		if (companhia == null) throw new CompanhiaException("Companhia Inv√°lida");
 		PilotoInterface piloto = new Piloto(CPF, nome, idade, telefoneProprio, CTPS, breve, horasDeVoo);
 		companhia.inserirPiloto(piloto);
 		repositorioPiloto.adicionar(piloto);
@@ -114,21 +114,21 @@ public class Negocio implements NegocioInterf{
 	
 	public ComissarioInterface cadastrarComissrio(CompanhiaInterface companhia, String CPF, String nome, int idade, String telefoneProprio, String CTPS, int ANAC) throws ComissarioException, CompanhiaException {
 		ComissarioInterface comissario = new Comissario(CPF, nome, idade, telefoneProprio, CTPS, ANAC);
-		if(companhia == null) throw new CompanhiaException("Companhia Inv·lida");
+		if(companhia == null) throw new CompanhiaException("Companhia Inv√°lida");
 		companhia.inserirComissario(comissario);
 		repositorioComissario.adicionar(comissario);
 		return comissario;
 	}
 	
 	public void removerComissario(CompanhiaInterface companhia, ComissarioInterface comissario) throws ComissarioException, CompanhiaException {
-		if(companhia == null) throw new CompanhiaException("Companhia Inv·lida");
+		if(companhia == null) throw new CompanhiaException("Companhia Inv√°lida");
 		companhia.removerComissario(comissario);
 		repositorioComissario.deletar(comissario);
 		comissario = null;
 	}
 	
 	public ComissarioInterface buscarComissario(CompanhiaInterface companhia, int cod) throws CompanhiaException {
-		if(companhia == null) throw new CompanhiaException("Companhia Inv·lida");
+		if(companhia == null) throw new CompanhiaException("Companhia Inv√°lida");
 		
 		ComissarioInterface comissario = null;
 		comissario = companhia.buscarComissario(cod);
@@ -175,7 +175,7 @@ public class Negocio implements NegocioInterf{
 	// VIAGEM
 	
 	public ViagemInterface cadastrarViagem(CompanhiaInterface companhia, int cod, String aeroportoOrigem, String aeroportoDestino, Date dataHoraDeEmbarque, Date dataHoraDeDesembarque,int vagasDisponiveis) throws ViagemException, CompanhiaException {
-		if(companhia == null) throw new CompanhiaException("Companhia Inv·lida");
+		if(companhia == null) throw new CompanhiaException("Companhia Inv√°lida");
 		
 		ViagemInterface viagem = new Viagem(cod, aeroportoOrigem, aeroportoDestino, dataHoraDeEmbarque, dataHoraDeDesembarque, vagasDisponiveis);
 		companhia.inserirViagem(viagem);
@@ -184,17 +184,16 @@ public class Negocio implements NegocioInterf{
 	}
 	
 	public void removerViagem(CompanhiaInterface companhia, ViagemInterface viagem) throws ViagemException, CompanhiaException {
-		if(companhia == null) throw new CompanhiaException("Companhia Inv·lida");
+		if(companhia == null) throw new CompanhiaException("Companhia Inv√°lida");
 		
-		
-		repositorioViagem.deletar(viagem);
 		companhia.removerViagem(viagem);
+		repositorioViagem.deletar(viagem);
 		viagem = null;
 		viagem = null;
 	}
 	
 	public ViagemInterface buscarViagem(CompanhiaInterface companhia,int cod) throws CompanhiaException {
-		if(companhia == null) throw new CompanhiaException("Companhia Inv·lida");
+		if(companhia == null) throw new CompanhiaException("Companhia Inv√°lida");
 		
 		ViagemInterface viagem = null;
 		viagem = companhia.buscarViagem(cod);
@@ -206,7 +205,7 @@ public class Negocio implements NegocioInterf{
 	// AVIAO
 	
 	public AviaoInterface cadastrarAviao(CompanhiaInterface companhia, int cod, int capacidade, String modelo) throws AviaoException, CompanhiaException {
-		if(companhia == null) throw new CompanhiaException("Companhia Inv·lida");
+		if(companhia == null) throw new CompanhiaException("Companhia Inv√°lida");
 		
 		AviaoInterface aviao =null;
 		if(modelo.equals("airbus")) {
@@ -225,15 +224,14 @@ public class Negocio implements NegocioInterf{
 	}
 	
 	public void removerAviao(CompanhiaInterface companhia, AviaoInterface aviao) throws AviaoException, CompanhiaException {
-		if(companhia == null) throw new CompanhiaException("Companhia Inv·lida");
-		
-		repositorioAviao.deletar(aviao);
+		if(companhia == null) throw new CompanhiaException("Companhia Inv√°lida");
 		companhia.removerAviao(aviao);
+		repositorioAviao.deletar(aviao);
 		aviao = null;
 	}
 	
 	public AviaoInterface buscarAviao(CompanhiaInterface companhia, int cod) throws CompanhiaException {
-		if(companhia == null) throw new CompanhiaException("Companhia Inv·lida");
+		if(companhia == null) throw new CompanhiaException("Companhia Inv√°lida");
 		
 		AviaoInterface aviao = null;
 		aviao = companhia.buscarAviao(cod);
@@ -245,8 +243,8 @@ public class Negocio implements NegocioInterf{
 	private void taxi(AviaoInterface aviao) throws TorreControleException{
 		if (aviao == null) throw new TorreControleException("Falta Aviao");
 		else if (aviao.checkList() == false) throw new TorreControleException("Checklist Incompleto");
-		else if (aviao.getStatus() == 1) throw new TorreControleException("O avi„o j· est· na pista");
-		else if (torreDeControle.getCounter() >= torreDeControle.getQuantidadeDePistas()) throw new TorreControleException("As pistas est„o lotadas");
+		else if (aviao.getStatus() == 1) throw new TorreControleException("O avi√£o j√° est√° na pista");
+		else if (torreDeControle.getCounter() >= torreDeControle.getQuantidadeDePistas()) throw new TorreControleException("As pistas est√£o lotadas");
 		else {
 			torreDeControle.setCounter(torreDeControle.getCounter() - 1);
 			aviao.setStatus(1);
@@ -260,7 +258,7 @@ public class Negocio implements NegocioInterf{
 			torreDeControle.setCounter(torreDeControle.getCounter() - 1);
 			aviao.setStatus(2);
 		}catch(TorreControleException e) {
-			throw new TorreControleException("Avi„o com o taxi negado. Motivo: "+e.getMessage());
+			throw new TorreControleException("Avi√£o com o taxi negado. Motivo: "+e.getMessage());
 		}
 	}
 
@@ -271,7 +269,7 @@ public class Negocio implements NegocioInterf{
 			torreDeControle.setCounter(torreDeControle.getCounter() - 1);
 			aviao.setStatus(0);
 		}catch (TorreControleException e){
-			throw new TorreControleException("Avi„o com o taxi negado. Motivo: "+e.getMessage());
+			throw new TorreControleException("Avi√£o com o taxi negado. Motivo: "+e.getMessage());
 		}
 	}
 }

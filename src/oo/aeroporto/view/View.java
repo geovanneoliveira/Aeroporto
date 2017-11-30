@@ -1,5 +1,9 @@
 package oo.aeroporto.view;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import oo.aeroporto.aviao.exception.AviaoException;
 import oo.aeroporto.aviao.interf.AviaoInterface;
 import oo.aeroporto.controle.exceptions.CompanhiaException;
@@ -14,12 +18,13 @@ import oo.aeroporto.pessoa.interf.*;
 
 public class View {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		
 		
 		Fachada f = new Fachada(2);
-
-		
+		SimpleDateFormat formatter = new SimpleDateFormat("DD/MM/YYYY hh:mm");
+		Date date1 = null;
+		Date date2= null;
 		
 		CompanhiaInterface companhia = null;
 		PilotoInterface piloto = null;
@@ -74,7 +79,7 @@ public class View {
 		
 		//COMISSARIO
 		try {
-			f.clickCadastrarComissario(companhia, "1234", "CARVALHO", 40, "956783452", "4321", 500);
+			comissario = f.clickCadastrarComissario(companhia, "1234", "CARVALHO", 40, "956783452", "4321", 500);
 			System.out.println("Comissario cadastrado com sucesso!");
 		} catch (ComissarioException | CompanhiaException coe) {
 			System.err.println("Erro ao cadastrar comissario, motivo: " + coe.getMessage());	
@@ -109,8 +114,11 @@ public class View {
 		
 		// VIAGEM
 		
+		date1 = formatter.parse("01/01/2017 13:54");
+		date2 = formatter.parse("01/01/2017 18:50");
+		
 		try {
-			viagem = f.cadastrarViagem(companhia, "1", "REC", "GAO", dataHoraDeEmbarque, dataHoraDeDesembarque, 12);
+			viagem = f.cadastrarViagem(companhia, 1, "REC", "GAO", date1, date2, 12);
 			System.out.println("Viagem cadastrada com sucesso!");
 		} catch (ViagemException | CompanhiaException ve) {
 			System.err.println("Erro ao cadastrar viagem, motivo: " + ve.getMessage());
@@ -127,18 +135,22 @@ public class View {
 		//AVIAO
 		
 		try {
-		
-		
-		
-		
-		
+			aviao = f.cadastraAviao(companhia, 10, 10, "Airbus");
+			System.out.println("Aviao cadastrado com sucesso!");
+		} catch (AviaoException | CompanhiaException ae) {
+			System.err.println("Erro ao cadastrar aviao, motivo: " + ae.getMessage());
+		}
 		
 		try {
-			f.clickPousarAviao(a);
-			System.out.println("Pouso realizado com sucesso!");
-		} catch (AviaoException | TorreControleException e) {
-			System.err.print("Não foi possível pousar o avião. Motivo: "+e.getMessage());
+			f.removerAviao(companhia, aviao);
+			System.out.println("Aviao Removido Com sucesso!");
+		} catch (AviaoException| CompanhiaException ae) {
+			System.err.println("Erro ao Remover aviao, motivo: " + ae.getMessage());
 		}
+		
+		
+		
+		
 	}
 
 }

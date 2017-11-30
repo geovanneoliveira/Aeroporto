@@ -213,25 +213,16 @@ public class Fachada {
 	
 	
 	// AVIAO
-	public AviaoInterface cadastraAviao(CompanhiaInterface companhia, int cod, int capacidade, String modelo) throws CompanhiaException {
+	public AviaoInterface cadastraAviao(CompanhiaInterface companhia, int cod, int capacidade, String modelo) throws CompanhiaException, AviaoException {
 		AviaoInterface aviao = null;
-		try {
 			aviao = negocio.cadastrarAviao(companhia,cod, capacidade, modelo);
-			System.out.println("Aviao cadastrado com sucesso!");
 			return aviao;
-		} catch (AviaoException ae) {
-			System.err.println("Erro ao cadastrar aviao, motivo: " + ae.getMessage());
-			return aviao;
-		}
+		
 	}
 	
-	public void removerAviao(CompanhiaInterface companhia, AviaoInterface aviao) throws CompanhiaException {
-		try {
+	public void removerAviao(CompanhiaInterface companhia, AviaoInterface aviao) throws CompanhiaException, AviaoException {
 			negocio.removerAviao(companhia, aviao);
-			System.out.println("Aviao Removido Com sucesso!");
-		} catch (AviaoException ae) {
-			System.err.println("Erro ao Remover aviao, motivo: " + ae.getMessage());
-		}
+	
 	}
 	
 	public AviaoInterface buscarAviao(CompanhiaInterface companhia, int cod) throws CompanhiaException {
