@@ -110,8 +110,11 @@ public class Fachada {
 		
 	}
 	
-	public void clickRemoverComissario(CompanhiaInterface companhia, ComissarioInterface comissario) throws ComissarioException, CompanhiaException {
-			negocio.removerComissario(companhia, comissario);
+	public ComissarioInterface clickRemoverComissario(CompanhiaInterface companhia, ComissarioInterface comissario) throws ComissarioException, CompanhiaException {
+		if (comissario == null) throw new ComissarioException("comissario Invalido");
+		else if (companhia == null)	throw new CompanhiaException("Companhia nao existe");	
+		negocio.removerComissario(companhia, comissario);
+		return null;
 		
 	}
 	
@@ -131,22 +134,25 @@ public class Fachada {
 		
 	}
 	
-	public void clickRemoverPassageiro(ViagemInterface v, PassageiroInterface passageiro) throws PassageiroException, ViagemException {
-			negocio.removerPassageiro(v,passageiro);
+	public PassageiroInterface clickRemoverPassageiro(ViagemInterface v, PassageiroInterface passageiro) throws PassageiroException, ViagemException {
+		if (passageiro == null) throw new PassageiroException("Passageiro Invalido");
+		else if (v == null)	throw new ViagemException("Viagem nao existe");		
+		negocio.removerPassageiro(v,passageiro);
+		return null;
 			
 	}
 	
-	public PassageiroInterface clickBuscarPassageiroPorCod(ViagemInterface v, String cod) throws ViagemException, PilotoException {
+	public PassageiroInterface clickBuscarPassageiroPorCod(ViagemInterface v, String cod) throws ViagemException, PassageiroException {
 		PassageiroInterface passageiro = null;
 		passageiro = negocio.buscarPassageiroCod(v,cod);
-		if (passageiro == null) throw new PilotoException("Nenhum Passageiro localizado!");
+		if (passageiro == null) throw new PassageiroException("Nenhum Passageiro localizado!");
 		else return passageiro;
 	}
 	
-	public PassageiroInterface clickBuscarPassageiroPorNome(String nome) throws PilotoException{
+	public PassageiroInterface clickBuscarPassageiroPorNome(String nome) throws PassageiroException{
 		PassageiroInterface passageiro = null;
 		passageiro = negocio.buscarPassageiroNome(nome);
-		if (passageiro == null) throw new PilotoException("Nenhum Passageiro localizado!");
+		if (passageiro == null) throw new PassageiroException("Nenhum Passageiro localizado!");
 		else return passageiro;
 	}
 	
@@ -160,9 +166,11 @@ public class Fachada {
 		
 	}
 	
-	public void removerViagem(CompanhiaInterface companhia, ViagemInterface viagem) throws ViagemException, CompanhiaException{
-			negocio.removerViagem(companhia, viagem);
-		
+	public ViagemInterface removerViagem(CompanhiaInterface companhia, ViagemInterface viagem) throws ViagemException, CompanhiaException{
+		if (viagem == null) throw new ViagemException("Viagem Invalido");
+		else if (companhia == null)	throw new CompanhiaException("Companhia nao existe");		
+		negocio.removerViagem(companhia, viagem);
+		return null;
 	}
 	
 	public ViagemInterface buscarViagem(CompanhiaInterface companhia, int cod) throws CompanhiaException, ViagemException {
@@ -182,9 +190,11 @@ public class Fachada {
 		
 	}
 	
-	public void removerAviao(CompanhiaInterface companhia, AviaoInterface aviao) throws CompanhiaException, AviaoException {
-			negocio.removerAviao(companhia, aviao);
-	
+	public AviaoInterface removerAviao(CompanhiaInterface companhia, AviaoInterface aviao) throws CompanhiaException, AviaoException {
+		if (aviao == null) throw new AviaoException("Avião Invalido");
+		else if (companhia == null)	throw new CompanhiaException("Companhia nao existe");
+		negocio.removerAviao(companhia, aviao);
+		return null;
 	}
 	
 	public AviaoInterface buscarAviao(CompanhiaInterface companhia, int cod) throws CompanhiaException, AviaoException {

@@ -51,12 +51,12 @@ public class View {
 			System.err.println("Erro ao cadastrar companhia, motivo: " + ce.getMessage());
 		}
 		
-		try {
+		/*try {
 			companhia = f.clickRemoverCompanhia(companhia);
 			System.out.println("Companhia Removida Com sucesso!");
 		}  catch (CompanhiaException ce){
 			System.err.println("Erro ao Remover companhia, motivo: " + ce.getMessage());
-		}
+		}*/
 		
 		
 		
@@ -71,7 +71,7 @@ public class View {
 		
 		
 		try {
-			f.clickRemoverPiloto(companhia, piloto);
+			piloto = f.clickRemoverPiloto(companhia, piloto);
 			System.out.println("Piloto Removido Com sucesso!");
 		} catch (PilotoException | CompanhiaException ce) {
 			System.err.println("Erro ao Remover Piloto, motivo: " + ce.getMessage());
@@ -87,29 +87,10 @@ public class View {
 		}
 		
 		try {
-			f.clickRemoverComissario(companhia, comissario);
+			comissario = f.clickRemoverComissario(companhia, comissario);
 			System.out.println("Comissario Removido Com sucesso!");
 		} catch (ComissarioException | CompanhiaException ce){
 			System.err.println("Erro ao Remover comissario, motivo: " + ce.getMessage());
-		}
-		
-		
-		
-		//PASSAGEIRO
-		
-		try {
-			passageiro = f.cadastrarPassageiro(viagem, "12345", "ROMULO", 29, "987654233", "912345123");
-			System.out.println("Passageiro cadastrado com sucesso!");
-		} catch (PassageiroException | ViagemException pe) {
-			System.err.println("Erro ao cadastrar passageiro, motivo: " + pe.getMessage());
-		}
-		
-		
-		try {
-			f.clickRemoverPassageiro(viagem, passageiro);
-			System.out.println("Passageiro Removido Com sucesso!");
-		} catch (PassageiroException | ViagemException pe){
-			System.err.println("Erro ao Remover Passageiro, motivo: " + pe.getMessage());
 		}
 		
 		
@@ -128,11 +109,31 @@ public class View {
 		
 		
 		try {
-			f.removerViagem(companhia, viagem);
+			viagem = f.removerViagem(companhia, viagem);
 			System.out.println("Viagem Removido Com sucesso!");
 		} catch (ViagemException | CompanhiaException ve) {
 			System.err.println("Erro ao Remover comissario, motivo: " + ve.getMessage());
 		}
+		
+		//PASSAGEIRO
+		
+		try {
+			passageiro = f.cadastrarPassageiro(viagem, "12345", "ROMULO", 29, "987654233", "912345123");
+			System.out.println("Passageiro cadastrado com sucesso!");
+		} catch (PassageiroException | ViagemException pe) {
+			System.err.println("Erro ao cadastrar passageiro, motivo: " + pe.getMessage());
+		}
+		
+		
+		try {
+			passageiro = f.clickRemoverPassageiro(viagem, passageiro);
+			System.out.println("Passageiro Removido Com sucesso!");
+		} catch (PassageiroException | ViagemException pe){
+			System.err.println("Erro ao Remover Passageiro, motivo: " + pe.getMessage());
+		}
+		
+		
+
 		
 		//AVIAO
 		
@@ -144,13 +145,11 @@ public class View {
 		}
 		
 		try {
-			f.removerAviao(companhia, aviao);
+			aviao = f.removerAviao(companhia, aviao);
 			System.out.println("Aviao Removido Com sucesso!");
 		} catch (AviaoException| CompanhiaException ae) {
 			System.err.println("Erro ao Remover aviao, motivo: " + ae.getMessage());
 		}
-		
-		
 		
 		
 	}
